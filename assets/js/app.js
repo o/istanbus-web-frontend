@@ -10,18 +10,32 @@ $("#bus_search_input").keyup(function (event) {
     $.getJSON(api + '/bus/search/' + keyword, function(json, textStatus) {
       if (json.length > 0) {
           $('#search_results').empty();
+          $('#bus_search').removeClass('error warning');
           $('#bus_search').addClass('success');
           $.each(json, function(index, val) {
             $('#search_results').append('<div class="row bus" rel="' + val._id + '"><div class="span2">' + val._id + '</div><div class="span10">' + val.name +'</div></div>');
           });
           $('#search_results .bus').click(function() {
             $.getJSON(api + '/bus/' + $(this).attr('rel'), function(json) {
-              console.log(json);
+                //
+            })
+            .complete(function() {
+                //
+            })
+            .error(function() { 
+                //
             });
           });
       } else {
-          $('#bus_search').removeClass('success');
+          $('#bus_search').removeClass('success error');
           $('#bus_search').addClass('warning');
       }
+    })
+    .complete(function() {
+        //
+    })
+    .error(function() { 
+        $('#bus_search').removeClass('success warning');
+        $('#bus_search').addClass('error');
     });
 });
