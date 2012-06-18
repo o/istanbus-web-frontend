@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Istanbus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -13,25 +13,27 @@
         
         </header>
         <nav>
-            <ul>
-                <li><a href="/bus" id="bus_search_href">Otobus</a></li>
+            <ul class="nav nav-pills">
+                <li class="active"><a href="/bus" id="bus_search_href">Otobüs</a></li>
                 <li><a href="/stop" id="stop_search_href">Durak</a></li>
             </ul>
         </nav>
         <section>
-            <div id="bus_search">
+            <div id="bus_search" class="row control-group">
                 <form action="/search" id="bus_search_form">
-                    <input type="text" id="bus_search_input">
+                    <input type="text" id="bus_search_input" class="big_input" autocomplete="off">
                 </form>
             </div>
-            <div id="stop_search">
+            <div id="stop_search" class="row control-group">
                 <form action="/search" id="stop_search_form">
-                    <input type="text" id="stop_search_input">
-                </form>            
+                    <input type="text" id="stop_search_input" class="big_input" autocomplete="off">
+                </form>
             </div>
         </section>
         <section>
+            <div id="search_results">
 
+            </div>
         </section>
         <footer>
         
