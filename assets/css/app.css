@@ -39,18 +39,20 @@ line-height: 3em;
 div#search_results .row:nth-child(odd) {
 background-color: #f9f9f9;
 }
+
 .spinner-icon {
-    display: block;
-    position: absolute;
-    right: 2px;
-	z-index: 3;
-	top: 45px;
-}
-.nav-spin {
-    margin-left: 7px;
-    margin-top: 3px;
-}
-#bus_search_form {
-    position: relative;
+display: block;
+position: absolute;
+right: 2px;
+z-index: 3;
+top: 45px;
 }
 
+.nav-spin {
+margin-left: 7px;
+margin-top: 3px;
+}
+
+#bus_search_form {
+position: relative;
+}
