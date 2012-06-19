@@ -8,7 +8,8 @@ $("#bus_search_input").keyup(function (event) {
     }
     var keyword = $(this).val().trim().toUpperCase();
     $.getJSON(api + '/bus/search/' + keyword, function(json, textStatus) {
-      if (json.length > 0) {
+	    $('#spinner').show();
+		if (json.length > 0) {
           $('#search_results').empty();
           $('#bus_search').removeClass('error warning');
           $('#bus_search').addClass('success');
@@ -22,7 +23,7 @@ $("#bus_search_input").keyup(function (event) {
             .complete(function() {
                 //
             })
-            .error(function() { 
+            .error(function() {
                 //
             });
           });
@@ -33,9 +34,32 @@ $("#bus_search_input").keyup(function (event) {
     })
     .complete(function() {
         //
+		setTimeout("$('#spinner').hide()", 0);
     })
-    .error(function() { 
+    .error(function() {
         $('#bus_search').removeClass('success warning');
         $('#bus_search').addClass('error');
+		setTimeout("$('#spinner').hide()", 0);
     });
+});
+var opts = {
+  lines: 13, // The number of lines to draw
+  length: 7, // The length of each line
+  width: 4, // The line thickness
+  radius: 10, // The radius of the inner circle
+  rotate: 0, // The rotation offset
+  color: '#000', // #rgb or #rrggbb
+  speed: 1, // Rounds per second
+  trail: 60, // Afterglow percentage
+  shadow: false, // Whether to render a shadow
+  hwaccel: false, // Whether to use hardware acceleration
+  className: 'spinner', // The CSS class to assign to the spinner
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  top: 'auto', // Top position relative to parent in px
+  left: 'auto' // Left position relative to parent in px
+};
+$(document).ready(function() {
+  	var target = document.getElementById('spinner');
+	var spinner = new Spinner(opts).spin(target);
+	$('#spinner').hide();
 });

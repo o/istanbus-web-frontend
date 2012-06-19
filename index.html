@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <header>
-        
+
         </header>
         <nav>
             <ul class="nav nav-pills">
@@ -21,6 +21,9 @@
         <section>
             <div id="bus_search" class="row control-group">
                 <form action="/search" id="bus_search_form">
+					<span class="spinner-icon">
+						<i id="spinner" class="nav-spin"></i>
+					</span>
                     <input type="text" id="bus_search_input" class="big_input" autocomplete="off">
                 </form>
             </div>
@@ -36,10 +39,11 @@
             </div>
         </section>
         <footer>
-        
+
         </footer>
     </div>
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/app.js"></script>
+	<script src="http://fgnass.github.com/spin.js/dist/spin.min.js"></script>
 </body>
 </html>
