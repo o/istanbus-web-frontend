@@ -7,14 +7,14 @@ $("#bus_search_input").keyup(function (event) {
         event.preventDefault();
     }
     var keyword = $(this).val().trim().toUpperCase();
-    $.getJSON(api + '/bus/search/' + keyword, function (json, textStatus) {
+    $.getJSON(api + '/search/bus/' + keyword, function (json, textStatus) {
         $('#spinner').show();
         if (json.length > 0) {
             $('#search_results').empty();
             $('#bus_search').removeClass('error warning');
             $('#bus_search').addClass('success');
             $.each(json, function (index, val) {
-                $('#search_results').append('<div class="row bus" rel="' + val._id + '"><div class="span2">' + val._id + '</div><div class="span10">' + val.name + '</div></div>');
+                $('#search_results').append('<div class="row bus" rel="' + val.id + '"><div class="span2">' + val.id + '</div><div class="span10">' + val.name + '</div></div>');
             });
             $('#search_results .bus').click(function () {
                 $.getJSON(api + '/bus/' + $(this).attr('rel'), function (json) {
