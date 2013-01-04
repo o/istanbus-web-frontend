@@ -1,0 +1,12 @@
+body {
+margin: 20px 0px;
+}
+
+header {
+height: 100px;
+}
+
+#search-input{
+font-size: 2em;
+padding: 1em;
+}
