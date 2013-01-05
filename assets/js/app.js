@@ -1,5 +1,6 @@
 function App () {
 
+  var eventHandlers = {};
   var ajaxHandlers = {};
   var domBuilders = {};
   var partialViews = {};
@@ -11,14 +12,14 @@ function App () {
   };
   
   var routes = {
-    search = {
+    search: {
       bus: function(id){return '/search/bus/' + id},
       stop: function(id){return '/search/stop/' + id}
     },
-    solutions = {
+    solutions: {
       howtogo: function(from, to) {return '/howtogo/from/' + from + '/to/' +  to}
     },
-    stop : {
+    stop: {
       detail: function(id) {return '/stop/' + id},
       closest: function(lat, lon) {return '/closest/lat/' + lat + '/lon/' + lon}
     },
@@ -26,13 +27,17 @@ function App () {
       detail: function(id) {return '/bus/' + id},
       timesheet: function(id) {return '/bus/' + id + '/timesheet'},
       stopsGo: function(id) {return '/bus/' + id + '/stops/go'},
-      stopsCome: function(id) {return '/bus/' + id + '/stops/come'};
+      stopsCome: function(id) {return '/bus/' + id + '/stops/come'}
     }
   };
 
   this.init = function() {
-    // initializer
+    helpers.initializeTabs();
   };
+
+  helpers.initializeTabs = function() {
+    $('nav').foundationTabs();
+  }
 
 }
 

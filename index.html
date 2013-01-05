@@ -11,18 +11,61 @@
     <header>
         
     </header>
-    <section id="search-bar" class="row">
-        <form action="/search" id="search-form">
-            <input type="text" id="search-input" class="eight columns" autocomplete="off">
-        </form>
+    <nav>
+        <div class="row">
+            <dl class="tabs">
+              <dd class="active"><a href="#busSearch">Otobus</a></dd>
+              <dd><a href="#stopSearch">Durak</a></dd>
+              <dd><a href="#howToGo">Nasil giderim</a></dd>
+              <dd><a href="#closestStop">En yakin durak</a></dd>
+            </dl>
+        </div>
+    </nav>
+    <section>
+        <div class="row">
+            <ul class="tabs-content">
+              <li class="active" id="busSearchTab">
+                  <form>
+                      <input class="ten columns" type="text" id="busKeyword" placeholder="Hat kodu ya da adi">
+                  </form>
+              </li>
+              <li id="stopSearchTab">
+                  <form>
+                      <input class="ten columns" type="text" id="stopKeyword" placeholder="Durak adi">
+                  </form>
+              </li>
+              <li id="howToGoTab">
+                  <form>
+                      <input class="five columns" type="text" id="howToGoFrom" placeholder="Nereden ?">
+                      <input class="five columns" type="text" id="howToGoTo" placeholder="Nereye ?">
+                  </form>
+              </li>
+              <li id="closestStopTab">
+                  
+              </li>
+            </ul>
+        </div>
     </section>
-    <section id="search-results">
-        
+    <section id="results">
+        <div class="row">
+            <div id="firstNarrowArea" class="five columns">
+                
+            </div>
+            <div id="secondNarrowArea" class="five columns">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div id="wideArea" class="twelve columns">
+                
+            </div>
+        </div>
     </section>
     <footer>
         
     </footer>        
     <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/jquery.foundation.tabs.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 </html>

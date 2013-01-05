@@ -6,7 +6,7 @@ header {
 height: 100px;
 }
 
-#search-input{
+.tabs-content input{
 font-size: 2em;
 padding: 1em;
 }
