@@ -10,3 +10,12 @@ height: 100px;
 font-size: 2em;
 padding: 1em;
 }
+
+.resultListElement {
+font-size: 2em;
+list-style: none;
+padding-bottom: 10px;
+padding-top: 10px;
+border-bottom: 3px solid #CCC;
+list-style-position: inside;
+}
