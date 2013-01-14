@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Istanbus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/foundation.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+</head>
+<body data-page-type="searchBus">
+    <header class="row"></header>
+    <nav class="row">
+        <dl class="tabs">
+          <dd><a id="busSearchLink" href="otobus-arama.html">Otobus</a></dd>
+          <dd><a id="stopSearchLink" href="durak-arama.html">Durak</a></dd>
+          <dd><a id="howToGoLink" href="nasil-giderim.html">Nasil giderim</a></dd>
+          <dd><a id="closestStopLink" href="en-yakin-durak.html">En yakin durak</a></dd>
+        </dl>
+    </nav>
+    <section class="row" id="search">
+      <form>
+          <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu ya da adi">
+      </form>
+    </section>
+    <section class="row" id="results">
+        
+    </section>
+    <footer class="row"></footer>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

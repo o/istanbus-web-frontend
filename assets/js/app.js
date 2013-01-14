@@ -1,10 +1,10 @@
 function App () {
-
-  var eventHandlers = {};
+  
+  var onLoadHandlers = {};
   var ajaxHandlers = {};
   var domBuilders = {};
   var partialViews = {};
-  var helpers = {};
+  var helpers = {};  
   var messages = {};
   
   var params = {
@@ -32,43 +32,44 @@ function App () {
   };
 
   this.init = function() {
-    helpers.initializeTabs();
-    eventHandlers.searchStop();
+    pageType = $('body').data('page-type');
+    if (onLoadHandlers[pageType]) {
+      onLoadHandlers[pageType].call();
+    }
+    onLoadHandlers.post();    
   };
-
-  helpers.initializeTabs = function() {
-    $('nav').foundationTabs();
-  }
-
-  eventHandlers.searchStop = function() {
-    $('#stopKeyword').keyup(
-      function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-        }
-        var keyword = $(this).val().trim();
-        ajaxHandlers.searchStop(keyword, domBuilders.searchStop);
+  
+  onLoadHandlers.post = function() {
+    //
+  };
+    
+  onLoadHandlers.searchStop = function() {
+    ajaxHandlers.searchStop();
+  };
+  
+  ajaxHandlers.searchStop = function() {
+    $('#stopKeyword').keyup(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+      }
+      var keyword = $(this).val().trim();
+      $.get(routes.search.stop(keyword), domBuilders.searchStop);  
       }
     );
-  }
+  };
   
   domBuilders.searchStop = function(results) {
     if (results.length > 0) {
-      $('#wideArea').html('<div id="resultList"></div>');
+      $('#stopResults').html('<div id="resultList"></div>');
       $.each(results, function(index, val) {
         $('#resultList').append(partialViews.stopResult(val));
       });
     };
   };
-  
+
   partialViews.stopResult = function(json) {
     return '<div class="resultListElement" data-id="' + json.id + '">' + json.name + '</div>'
   };
-
-  ajaxHandlers.searchStop = function(keyword, callback) {
-    $.get(routes.search.stop(keyword), callback);
-  };
-  
 
 }
 
