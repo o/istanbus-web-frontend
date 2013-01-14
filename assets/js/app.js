@@ -62,12 +62,12 @@ function App () {
     if (results.length > 0) {
       $('#stopResults').html('<div id="resultList"></div>');
       $.each(results, function(index, val) {
-        $('#resultList').append(partialViews.stopResult(val));
+        $('#resultList').append(partialViews.searchStopResult(val));
       });
     };
   };
 
-  partialViews.stopResult = function(json) {
+  partialViews.searchStopResult = function(json) {
     return '<div class="resultListElement" data-id="' + json.id + '">' + json.name + '</div>'
   };
 
