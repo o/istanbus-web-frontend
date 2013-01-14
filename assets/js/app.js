@@ -5,7 +5,9 @@ function App () {
   var domBuilders = {};
   var partialViews = {};
   var helpers = {};  
-  var messages = {};
+  var messages = {
+    noResult: 'Sonuç bulunamadı.'
+  };
   
   var params = {
     apiEndpoint: 'http://178.79.173.195:8000',
@@ -64,11 +66,17 @@ function App () {
       $.each(results, function(index, val) {
         $('#resultList').append(partialViews.searchStopResult(val));
       });
-    };
+    } else {
+      $('#stopResults').html(partialViews.alert('alert', messages.noResult));      
+    }
   };
 
   partialViews.searchStopResult = function(json) {
     return '<div class="resultListElement" data-id="' + json.id + '">' + json.name + '</div>'
+  };
+
+  partialViews.alert = function(type, message) {
+    return '<div class="alert-box ' + type + '">' + message + '</div>';
   };
 
 }
