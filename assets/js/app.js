@@ -90,6 +90,7 @@ function App () {
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
     marker.setLatLng(result.location);
     $('#stopDetail table tbody').empty();    
+    $('#stopInfo').html(partialViews.stopInfo(result));
     if (result.bus_list.length > 0) {
       $('#stopResults').slideUp();
       $('#stopDetail').fadeIn();
@@ -102,6 +103,10 @@ function App () {
 
   partialViews.stopDetails = function(bus) {
     return '<tr data-bus-id=' + bus.id + '><td>' + bus.id + '</td><td>' + bus.name + '</td></tr>';
+  };
+  
+  partialViews.stopInfo = function(stop) {
+    return '<h3 class="subheader">' + stop.name  + ' durağından geçen otobüsler</h3>'
   };
 
   helpers.initializeMap = function() {
