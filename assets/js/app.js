@@ -111,9 +111,10 @@ function App () {
 
   helpers.initializeMap = function() {
     map = L.map('map').setView(params.defaultMapLatLon, params.defaultMapZoom);
-    L.tileLayer('http://{s}.tile.cloudmade.com/5f9a0dab187a45cf8688a68cb55680a2/997/256/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-        maxZoom: 18
+    L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        key: '5f9a0dab187a45cf8688a68cb55680a2',
+        styleId: 79839
     }).addTo(map);
     marker = L.marker(params.defaultMapLatLon).addTo(map);
   };
