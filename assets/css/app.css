@@ -14,3 +14,8 @@ padding: 1em;
 #stopResults, #stopDetail, #noResultMessage {
 display: none;
 }
+
+#map {
+height: 300px;
+width: 100%;
+}
