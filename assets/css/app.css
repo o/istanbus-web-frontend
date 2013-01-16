@@ -11,10 +11,6 @@ font-size: 2em;
 padding: 1em;
 }
 
-.stopResultListElement {
-font-size: 2em;
-padding-bottom: 10px;
-padding-top: 10px;
-border-bottom: 3px solid #CCC;
-cursor:pointer
+#stopResults, #stopDetail, #noResultMessage {
+display: none;
 }

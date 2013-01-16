@@ -4,11 +4,7 @@ function App () {
   var ajaxHandlers = {};
   var domBuilders = {};
   var partialViews = {};
-  var helpers = {};  
-  var messages = {
-    noResult: 'Sonuç bulunamadı.'
-  };
-  
+  var helpers = {};    
   var params = {
     apiEndpoint: 'http://178.79.173.195:8000',
   };
@@ -62,20 +58,23 @@ function App () {
   
   domBuilders.searchStop = function(results) {
     if (results.length > 0) {
-      $('#stopResults').html('<div id="stopResultList"></div>');
+      $('#stopResults table tbody').empty();
+      $('#noResultMessage').fadeOut();
+      $('#stopResults').slideDown();
+      $('#stopDetail').fadeOut();
       $.each(results, function(index, val) {
-        $('#stopResultList').append(partialViews.searchStopResult(val));
+        $('#stopResults table tbody').append(partialViews.searchStopResult(val));
       });
-      $('.stopResultListElement').click(function () {
-        ajaxHandlers.stopDetails($(this).data('id'));
+      $('#stopResults table tbody tr').click(function () {
+        ajaxHandlers.stopDetails($(this).data('stopId'));
       });
     } else {
-      $('#stopResults').html(partialViews.alert('alert', messages.noResult));      
+      $('#noResultMessage').fadeIn();      
     }
   };
 
-  partialViews.searchStopResult = function(json) {
-    return '<div class="stopResultListElement" data-id="' + json.id + '">' + json.name + '</div>'
+  partialViews.searchStopResult = function(stop) {
+    return '<tr data-stop-id=' + stop.id + '><td>' + stop.name + '</td></tr>';
   };
 
   ajaxHandlers.stopDetails = function(id) {
@@ -84,7 +83,8 @@ function App () {
   
   domBuilders.stopDetails = function(result) {
     if (result.bus_list.length > 0) {
-      $('#stopResults').html('<div id="stopDetail"><table class="twelve"><tbody></tbody></table></div>');
+      $('#stopResults').slideUp();
+      $('#stopDetail').fadeIn();
       $.each(result.bus_list, function(index, val) {
         $('#stopDetail table tbody').append(partialViews.stopDetails(val));
       });    
@@ -93,11 +93,7 @@ function App () {
   };
 
   partialViews.stopDetails = function(bus) {
-    return '<tr><td>' + bus.id + '</td><td>' + bus.name + '</td></tr>';
-  };
-
-  partialViews.alert = function(type, message) {
-    return '<div class="alert-box ' + type + '">' + message + '</div>';
+    return '<tr data-bus-id=' + bus.id + '><td>' + bus.id + '</td><td>' + bus.name + '</td></tr>';
   };
 
 }
