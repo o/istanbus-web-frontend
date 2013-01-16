@@ -78,7 +78,7 @@ function App () {
   };
 
   partialViews.searchStopResult = function(stop) {
-    return '<tr data-stop-id=' + stop.id + '><td>' + stop.name + '</td></tr>';
+    return '<tr class="clickable" data-stop-id=' + stop.id + '><td>' + stop.name + '</td></tr>';
   };
 
   ajaxHandlers.stopDetails = function(id) {
