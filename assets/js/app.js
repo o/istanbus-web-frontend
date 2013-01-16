@@ -7,8 +7,13 @@ function App () {
   var helpers = {};    
   var params = {
     apiEndpoint: 'http://178.79.173.195:8000',
-    defaultMapZoom: 15,
-    defaultMapLatLon: [41.042252,29.006889]
+    defaultZoom: 8,
+    stopDetailZoom: 15,
+    maxZoom: 18,
+    styleId: 998,
+    tileLayerUrl: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
+    cloudMadeApiKey: '5f9a0dab187a45cf8688a68cb55680a2',
+    defaultLatLon: [41.042252,29.006889]
   };
   var map;
   var marker;
@@ -86,7 +91,7 @@ function App () {
   };
   
   domBuilders.stopDetails = function(result) {
-    map.setView(result.location, params.defaultMapZoom);
+    map.setView(result.location, params.stopDetailZoom);
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
     marker.setLatLng(result.location);
     $('#stopDetail table tbody').empty();    
@@ -110,13 +115,13 @@ function App () {
   };
 
   helpers.initializeMap = function() {
-    map = L.map('map').setView(params.defaultMapLatLon, params.defaultMapZoom);
-    L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        key: '5f9a0dab187a45cf8688a68cb55680a2',
-        styleId: 79839
+    map = L.map('map').setView(params.defaultLatLon, params.defaultZoom);
+    L.tileLayer(params.tileLayerUrl, {
+        maxZoom: params.MaxZoom,
+        key: params.cloudMadeApiKey,
+        styleId: params.styleId
     }).addTo(map);
-    marker = L.marker(params.defaultMapLatLon).addTo(map);
+    marker = L.marker(params.defaultLatLon).addTo(map);
   };
 
 }
