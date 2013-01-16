@@ -62,9 +62,12 @@ function App () {
   
   domBuilders.searchStop = function(results) {
     if (results.length > 0) {
-      $('#stopResults').html('<div id="resultList"></div>');
+      $('#stopResults').html('<div id="stopResultList"></div>');
       $.each(results, function(index, val) {
-        $('#resultList').append(partialViews.searchStopResult(val));
+        $('#stopResultList').append(partialViews.searchStopResult(val));
+      });
+      $('.stopResultListElement').click(function () {
+        ajaxHandlers.stopDetails($(this).data('id'));
       });
     } else {
       $('#stopResults').html(partialViews.alert('alert', messages.noResult));      
@@ -72,7 +75,25 @@ function App () {
   };
 
   partialViews.searchStopResult = function(json) {
-    return '<div class="resultListElement" data-id="' + json.id + '">' + json.name + '</div>'
+    return '<div class="stopResultListElement" data-id="' + json.id + '">' + json.name + '</div>'
+  };
+
+  ajaxHandlers.stopDetails = function(id) {
+    $.get(routes.stop.detail(id), domBuilders.stopDetails);      
+  };
+  
+  domBuilders.stopDetails = function(result) {
+    if (result.bus_list.length > 0) {
+      $('#stopResults').html('<div id="stopDetail"><table class="twelve"><tbody></tbody></table></div>');
+      $.each(result.bus_list, function(index, val) {
+        $('#stopDetail table tbody').append(partialViews.stopDetails(val));
+      });    
+    };
+    
+  };
+
+  partialViews.stopDetails = function(bus) {
+    return '<tr><td>' + bus.id + '</td><td>' + bus.name + '</td></tr>';
   };
 
   partialViews.alert = function(type, message) {
