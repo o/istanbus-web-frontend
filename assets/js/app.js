@@ -159,8 +159,8 @@ function App () {
     $('#gettingLocationMessage').hide();
     $('#locationFoundMessage span').text(parseInt(accuracy));
     $('#locationFoundMessage').fadeIn();
-    var radius = accuracy / 2;
-    mapLayers.vector.circle.default.setLatLng(latlng).setRadius(radius);
+    map.removeLayer(mapLayers.ui.marker.default);
+    mapLayers.vector.circle.default.setLatLng(latlng).setRadius(accuracy / 2);
     mapLayers.ui.popup.default.setLatLng(latlng).setContent(messages.youAreHere);
   };
 
