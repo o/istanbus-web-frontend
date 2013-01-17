@@ -4,7 +4,10 @@ function App () {
   var ajaxHandlers = {};
   var domBuilders = {};
   var partialViews = {};
-  var helpers = {};    
+  var helpers = {}; 
+  var messages = {
+    youAreHere: 'Buradasınız.'
+  };   
   var params = {
     apiEndpoint: 'http://178.79.173.195:8000',
     defaultZoom: 8,
@@ -13,10 +16,18 @@ function App () {
     styleId: 998,
     tileLayerUrl: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
     cloudMadeApiKey: '5f9a0dab187a45cf8688a68cb55680a2',
-    defaultLatLon: [41.042252,29.006889]
+    defaultLatLon: [0,0]
   };
   var map;
-  var marker;
+  var mapLayers = {
+    ui: {
+      marker: {},
+      popup: {},
+    },
+    vector: {
+      circle: {}
+    }
+  }
   var routes = {
     search: {
       bus: function(id){return params.apiEndpoint + '/search/bus/' + id},
@@ -52,7 +63,11 @@ function App () {
   onLoadHandlers.searchStop = function() {
     ajaxHandlers.searchStop();
     helpers.initializeMap();
-    helpers.initializeMarker();
+  };
+  
+  onLoadHandlers.closestStop = function() {
+    helpers.initializeMap();
+    helpers.locateUser();
   };
   
   ajaxHandlers.searchStop = function() {
@@ -84,7 +99,7 @@ function App () {
   };
 
   partialViews.searchStopResult = function(stop) {
-    return '<tr class="clickable" data-stop-id=' + stop.id + '><td>' + stop.name + '</td></tr>';
+    return '<tr data-stop-id=' + stop.id + '><td>' + stop.name + '</td></tr>';
   };
 
   ajaxHandlers.stopDetails = function(id) {
@@ -94,7 +109,7 @@ function App () {
   domBuilders.stopDetails = function(result) {
     map.setView(result.location, params.stopDetailZoom);
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
-    marker.setLatLng(result.location);
+    mapLayers.ui.marker.default.setLatLng(result.location);
     $('#stopDetail table tbody').empty();    
     $('#stopInfo').html(partialViews.stopInfo(result));
     if (result.bus_list.length > 0) {
@@ -114,6 +129,35 @@ function App () {
   partialViews.stopInfo = function(stop) {
     return '<h3 class="subheader">' + stop.name  + ' durağından geçen otobüsler</h3>'
   };
+  
+  ajaxHandlers.closestStop = function(latlng) {
+    $.get(routes.stop.closest(latlng.lat, latlng.lng), domBuilders.closestStop);
+  };
+  
+  domBuilders.closestStop = function(results) {
+    if (results.length > 0) {
+      $('#stopResults').slideDown();
+      $.each(results, function(index, val) {
+        $('#stopResults table tbody').append(partialViews.searchStopResult(val));
+      });
+    } else {
+      $('#noResultMessage').fadeIn();
+    }
+  };
+  
+  domBuilders.closestStopFound = function(latlng, accuracy) {
+    $('#gettingLocationMessage').hide();
+    $('#locationFoundMessage span').text(accuracy);
+    $('#locationFoundMessage').fadeIn();
+    var radius = accuracy / 2;
+    mapLayers.vector.circle.default.setLatLng(latlng).setRadius(radius);
+    mapLayers.ui.popup.default.setLatLng(latlng).setContent(messages.youAreHere);
+  };
+
+  domBuilders.closestStopError = function(payload) {
+    $('#gettingLocationMessage').hide();
+    $('#locationErrorMessage').fadeIn();
+  };
 
   helpers.initializeMap = function() {
     map = L.map('map').setView(params.defaultLatLon, params.defaultZoom);
@@ -122,10 +166,25 @@ function App () {
         key: params.cloudMadeApiKey,
         styleId: params.styleId
     }).addTo(map);
+    mapLayers.ui.marker.default = L.marker(params.defaultLatLon).addTo(map);
+    mapLayers.vector.circle.default = L.circle(params.defaultLatLon, 0).addTo(map);
+    mapLayers.ui.popup.default = L.popup().setLatLng(params.defaultLatLon).openOn(map);
+  };
+    
+  helpers.locateUser = function() {
+    $('#gettingLocationMessage').show();
+    map.locate({setView:true, enableHighAccuracy:true, maxZoom: params.maxZoom});
+    map.on('locationfound', helpers.onLocationFound);
+    map.on('locationerror', helpers.onLocationError);
   };
   
-  helpers.initializeMarker = function() {
-    marker = L.marker(params.defaultLatLon).addTo(map);
+  helpers.onLocationFound = function(payload) {
+    domBuilders.closestStopFound(payload.latlng, payload.accuracy);
+    ajaxHandlers.closestStop(payload.latlng);
+  };
+  
+  helpers.onLocationError = function(payload) {
+    domBuilders.closestStopError(payload);
   };
 
 }
