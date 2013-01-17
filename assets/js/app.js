@@ -52,6 +52,7 @@ function App () {
   onLoadHandlers.searchStop = function() {
     ajaxHandlers.searchStop();
     helpers.initializeMap();
+    helpers.initializeMarker();
   };
   
   ajaxHandlers.searchStop = function() {
@@ -121,6 +122,9 @@ function App () {
         key: params.cloudMadeApiKey,
         styleId: params.styleId
     }).addTo(map);
+  };
+  
+  helpers.initializeMarker = function() {
     marker = L.marker(params.defaultLatLon).addTo(map);
   };
 
