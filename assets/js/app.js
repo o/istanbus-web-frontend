@@ -12,6 +12,7 @@ function App () {
     apiEndpoint: 'http://178.79.173.195:8000',
     defaultZoom: 8,
     stopDetailZoom: 15,
+    closestStopsZoom: 14,
     maxZoom: 18,
     styleId: 998,
     tileLayerUrl: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
@@ -21,11 +22,18 @@ function App () {
   var map;
   var mapLayers = {
     ui: {
-      marker: {},
-      popup: {},
+      marker: {
+        default: {},
+        closestStops: []
+      },
+      popup: {
+        default: {}
+      },
     },
     vector: {
-      circle: {}
+      circle: {
+        default: {}
+      }
     }
   }
   var routes = {
@@ -139,7 +147,9 @@ function App () {
       $('#stopResults').slideDown();
       $.each(results, function(index, val) {
         $('#stopResults table tbody').append(partialViews.searchStopResult(val));
-      });
+        mapLayers.ui.marker.closestStops.push(L.marker(val.location).addTo(map).bindPopup(val.name));
+      }); 
+      map.setZoom(params.closestStopsZoom);
     } else {
       $('#noResultMessage').fadeIn();
     }
@@ -147,7 +157,7 @@ function App () {
   
   domBuilders.closestStopFound = function(latlng, accuracy) {
     $('#gettingLocationMessage').hide();
-    $('#locationFoundMessage span').text(accuracy);
+    $('#locationFoundMessage span').text(parseInt(accuracy));
     $('#locationFoundMessage').fadeIn();
     var radius = accuracy / 2;
     mapLayers.vector.circle.default.setLatLng(latlng).setRadius(radius);
