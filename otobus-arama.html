@@ -6,27 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/foundation.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" rel="stylesheet" type="text/css" />
 </head>
 <body data-page-type="searchBus">
     <header class="row"></header>
     <nav class="row">
         <dl class="tabs">
           <dd><a id="busSearchLink" href="otobus-arama.html">Otobus</a></dd>
-          <dd><a id="stopSearchLink" href="durak-arama.html">Durak</a></dd>
+          <dd><a id="busSearchLink" href="durak-arama.html">Durak</a></dd>
           <dd><a id="howToGoLink" href="nasil-giderim.html">Nasil giderim</a></dd>
           <dd><a id="closestStopLink" href="en-yakin-durak.html">En yakin durak</a></dd>
         </dl>
     </nav>
     <section class="row" id="search">
       <form>
-          <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu ya da adi">
+          <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı">
       </form>
     </section>
     <section class="row" id="results">
-        
+        <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
+        <div id="busResults">
+            <table class="twelve">
+                <thead>
+                  <tr>
+                    <th>Otobüs kodu</th>
+                    <th>Hat adı</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="row" id="detail">
+        <div id="busDetail">
+            <div id="busInfo" class="twelve columns panel"></div>
+        </div>
     </section>
     <footer class="row"></footer>
     <script src="assets/js/jquery.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>        
     <script src="assets/js/app.js"></script>
 </body>
 </html>

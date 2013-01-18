@@ -72,6 +72,46 @@ function App () {
     helpers.locateUser();
   };
   
+  onLoadHandlers.searchBus = function() {
+    ajaxHandlers.searchBus();
+  };
+  
+  ajaxHandlers.searchBus = function() {
+    $('#busKeyword').keyup(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+      }
+      var keyword = $(this).val().trim();
+      $.get(routes.search.bus(keyword), domBuilders.searchBus);  
+      }
+    );
+  };
+  
+  domBuilders.searchBus = function(results) {
+    if (results.length > 0) {
+      $('#busResults table tbody').empty();
+      $('#noResultMessage').fadeOut();
+      $('#busResults').slideDown();
+      $('#busDetail').fadeOut();
+      $.each(results, function(index, val) {
+        $('#busResults table tbody').append(partialViews.stopDetails(val));
+      });
+      $('#busResults table tbody tr').click(function () {
+        ajaxHandlers.busDetails($(this).data('busId'));
+      });
+    } else {
+      $('#noResultMessage').fadeIn();      
+    }
+  };
+  
+  ajaxHandlers.busDetails = function(id) {
+    $.get(routes.bus.detail(id), domBuilders.busDetails);
+  };
+  
+  domBuilders.busDetails = function(result) {
+    console.log(result);
+  };
+  
   ajaxHandlers.searchStop = function() {
     $('#stopKeyword').keyup(function(event) {
       if (event.which == 13) {

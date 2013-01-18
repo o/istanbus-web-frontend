@@ -11,7 +11,7 @@ font-size: 2em;
 padding: 1em;
 }
 
-#stopResults, #stopDetail, #noResultMessage, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
+#stopResults, #busResults, #stopDetail, #busDetail, #noResultMessage, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
 display: none;
 }
 
