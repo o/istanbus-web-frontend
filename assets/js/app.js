@@ -17,23 +17,17 @@ function App () {
     styleId: 998,
     tileLayerUrl: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
     cloudMadeApiKey: '5f9a0dab187a45cf8688a68cb55680a2',
-    defaultLatLon: [0,0]
+    defaultLatLon: [0,0],
+    istanbulLatLon: [41.045311,29.034548]
   };
   var map;
   var mapLayers = {
     ui: {
-      marker: {
-        default: {},
-        closestStops: []
-      },
-      popup: {
-        default: {}
-      },
+      marker: {},
+      popup: {},
     },
     vector: {
-      circle: {
-        default: {}
-      }
+      circle: {}
     }
   }
   var routes = {
@@ -147,7 +141,7 @@ function App () {
       $('#stopResults').slideDown();
       $.each(results, function(index, val) {
         $('#stopResults table tbody').append(partialViews.searchStopResult(val));
-        mapLayers.ui.marker.closestStops.push(L.marker(val.location).addTo(map).bindPopup(val.name));
+        L.marker(val.location).addTo(map).bindPopup(val.name);
       }); 
       map.setZoom(params.closestStopsZoom);
     } else {
@@ -159,14 +153,14 @@ function App () {
     $('#gettingLocationMessage').hide();
     $('#locationFoundMessage span').text(parseInt(accuracy));
     $('#locationFoundMessage').fadeIn();
-    map.removeLayer(mapLayers.ui.marker.default);
-    mapLayers.vector.circle.default.setLatLng(latlng).setRadius(accuracy / 2);
-    mapLayers.ui.popup.default.setLatLng(latlng).setContent(messages.youAreHere);
+    L.circle(latlng, accuracy / 2).addTo(map)
+    L.popup().setLatLng(latlng).setContent(messages.youAreHere).openOn(map)
   };
 
   domBuilders.closestStopError = function(payload) {
     $('#gettingLocationMessage').hide();
     $('#locationErrorMessage').fadeIn();
+    map.setView(params.istanbulLatLon, params.defaultZoom);
   };
 
   helpers.initializeMap = function() {
@@ -176,9 +170,6 @@ function App () {
         key: params.cloudMadeApiKey,
         styleId: params.styleId
     }).addTo(map);
-    mapLayers.ui.marker.default = L.marker(params.defaultLatLon).addTo(map);
-    mapLayers.vector.circle.default = L.circle(params.defaultLatLon, 0).addTo(map);
-    mapLayers.ui.popup.default = L.popup().setLatLng(params.defaultLatLon).openOn(map);
   };
     
   helpers.locateUser = function() {
