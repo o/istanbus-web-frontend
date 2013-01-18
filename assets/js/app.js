@@ -117,7 +117,7 @@ function App () {
   domBuilders.stopDetails = function(result) {
     map.setView(result.location, params.stopDetailZoom);
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
-    mapLayers.ui.marker.default.setLatLng(result.location);
+    L.marker(result.location).addTo(map).bindPopup(result.name);
     $('#stopDetail table tbody').empty();    
     $('#stopInfo').html(partialViews.stopInfo(result));
     if (result.bus_list.length > 0) {
