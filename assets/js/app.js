@@ -9,7 +9,7 @@ function App () {
     youAreHere: 'Buradasınız.'
   };   
   var params = {
-    apiEndpoint: 'http://178.79.173.195:8000',
+    apiEndpoint: 'http://api.istanbus.org',
     defaultZoom: 8,
     stopDetailZoom: 15,
     closestStopsZoom: 14,
