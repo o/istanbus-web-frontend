@@ -6,17 +6,8 @@ header {
 height: 100px;
 }
 
-#search input{
-font-size: 2em;
-padding: 1em;
-}
-
 #stopResults, #busResults, #stopDetail, #busDetail, #noResultMessage, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
 display: none;
-}
-
-#stopInfo {
-margin-top: 20px;
 }
 
 .clickable {
@@ -26,4 +17,5 @@ cursor: pointer;
 #map {
 height: 300px;
 width: 100%;
+margin-bottom: 20px;
 }
