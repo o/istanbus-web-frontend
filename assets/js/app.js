@@ -109,7 +109,31 @@ function App () {
   };
   
   domBuilders.busDetails = function(result) {
-    console.log(result);
+    $('#busResults').fadeOut();
+    $('#noResultMessage').fadeOut();    
+    $('#busDetail').slideDown();
+    $.each(result.time.workday_go, function(index, val) {
+      $('#workdaysGo tbody').append(partialViews.busTimeTables(val));
+    });    
+    $.each(result.time.workday_turn, function(index, val) {
+      $('#workdaysTurn tbody').append(partialViews.busTimeTables(val));
+    });
+    $.each(result.time.saturday_go, function(index, val) {
+      $('#saturdayGo tbody').append(partialViews.busTimeTables(val));
+    });
+    $.each(result.time.saturday_turn, function(index, val) {
+      $('#saturdayTurn tbody').append(partialViews.busTimeTables(val));
+    });
+    $.each(result.time.sunday_go, function(index, val) {
+      $('#sundayGo tbody').append(partialViews.busTimeTables(val));
+    });
+    $.each(result.time.sunday_turn, function(index, val) {
+      $('#sundayTurn tbody').append(partialViews.busTimeTables(val));
+    });
+  };
+  
+  partialViews.busTimeTables = function(time) {
+    return '<tr><td>' + time + '</td></tr>';
   };
   
   ajaxHandlers.searchStop = function() {
