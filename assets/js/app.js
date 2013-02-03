@@ -208,15 +208,17 @@ function App () {
   };
   
   ajaxHandlers.closestStop = function(latlng) {
-    $.get(routes.stop.closest(latlng.lat, latlng.lng), domBuilders.closestStop);
+    $.get(routes.stop.closest(latlng.lat, latlng.lng), function(json) {
+      domBuilders.closestStop(json, latlng);
+    });
   };
   
-  domBuilders.closestStop = function(results) {
+  domBuilders.closestStop = function(results, latlng) {
     if (results.length > 0) {
       $('#stopResults').slideDown();
       $.each(results, function(index, val) {
         $('#stopResults table tbody').append(partialViews.searchStopResult(val));
-        L.marker(val.location).addTo(map).bindPopup(val.name);
+        L.marker(val.location).addTo(map).bindPopup(val.name + '</br>(Yaklaşık ' + helpers.calculateDistance(latlng.lat, latlng.lng, val.location[0], val.location[1]) + ' m)');
       }); 
       map.setZoom(params.closestStopsZoom);
     } else {
@@ -285,6 +287,22 @@ function App () {
     return variable;
   };
 
+  helpers.calculateDistance = function(lat1, lon1, lat2, lon2) {
+    var R = 6371000;
+    var dLat = (lat2-lat1).toRad();
+    var dLon = (lon2-lon1).toRad();
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    return d.toFixed(0);
+  }
+  
+}
+
+Number.prototype.toRad = function() {
+  return this * Math.PI / 180;
 }
 
 $.ajaxSetup({
