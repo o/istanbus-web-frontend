@@ -74,6 +74,7 @@ function App () {
   
   onLoadHandlers.searchBus = function() {
     ajaxHandlers.searchBus();
+    $(document).foundationAccordion();
   };
   
   ajaxHandlers.searchBus = function() {

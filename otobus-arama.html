@@ -40,51 +40,80 @@
     </section>
     <section class="row" id="detail">
         <div id="busDetail">
-            <div id="busInfo" class="twelve columns panel"></div>
-            <table id="stops" class="twelve">
-                <thead>
-                  <tr>
-                    <th>Gidiş Durakları</th>
-                    <th>Dönüş Durakları</th>
-                  </tr>
-                </thead>
-                <tbody>
+            <ul class="accordion">
+              <li>
+                <div class="title">
+                  <h5>Duraklar</h5>
+                </div>
+                <div class="content">
+                    <table id="stops" class="twelve">
+                        <thead>
+                          <tr>
+                            <th>Gidiş</th>
+                            <th>Dönüş</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                         
-                </tbody>
-            </table>
-            <table id="timetableWeekdays" class="twelve">
-                <thead>
-                  <tr>
-                    <th>Gidiş Saatleri</th>
-                    <th>Dönüş Saatleri</th>
-                  </tr>
-                </thead>
-                <tbody>
+                        </tbody>
+                    </table>
+                </div>
+              </li>
+              <li>
+                <div class="title">
+                  <h5>Haftaiçi kalkış saatleri</h5>
+                </div>
+                <div class="content">
+                    <table id="timetableWeekdays" class="twelve">
+                        <thead>
+                          <tr>
+                            <th>Gidiş</th>
+                            <th>Dönüş</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                         
-                </tbody>
-            </table>
-            <table id="timetableSaturday" class="twelve">
-                <thead>
-                  <tr>
-                    <th>Gidiş Saatleri</th>
-                    <th>Dönüş Saatleri</th>
-                  </tr>
-                </thead>
-                <tbody>
+                        </tbody>
+                    </table>
+                </div>
+              </li>
+              <li>
+                <div class="title">
+                  <h5>Cumartesi kalkış saatleri</h5>
+                </div>
+                <div class="content">
+                    <table id="timetableSaturday" class="twelve">
+                        <thead>
+                          <tr>
+                            <th>Gidiş Saatleri</th>
+                            <th>Dönüş Saatleri</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                         
-                </tbody>
-            </table>
-            <table id="timetableSunday" class="twelve">
-                <thead>
-                  <tr>
-                    <th>Gidiş Saatleri</th>
-                    <th>Dönüş Saatleri</th>
-                  </tr>
-                </thead>
-                <tbody>
+                        </tbody>
+                    </table>                  
+                </div>
+              </li>
+              <li>
+                <div class="title">
+                  <h5>Pazar kalkış saatleri</h5>
+                </div>
+                <div class="content">
+                    <table id="timetableSunday" class="twelve">
+                        <thead>
+                          <tr>
+                            <th>Gidiş Saatleri</th>
+                            <th>Dönüş Saatleri</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                         
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+              </li>
+            </ul>            
         </div>
     </section>
     <footer class="row"></footer>
