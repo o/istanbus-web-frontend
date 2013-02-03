@@ -110,30 +110,40 @@ function App () {
   
   domBuilders.busDetails = function(result) {
     $('#busResults').fadeOut();
-    $('#noResultMessage').fadeOut();    
+    $('#noResultMessage').fadeOut();
     $('#busDetail').slideDown();
-    $.each(result.time.workday_go, function(index, val) {
-      $('#workdaysGo tbody').append(partialViews.busTimeTables(val));
-    });    
-    $.each(result.time.workday_turn, function(index, val) {
-      $('#workdaysTurn tbody').append(partialViews.busTimeTables(val));
-    });
-    $.each(result.time.saturday_go, function(index, val) {
-      $('#saturdayGo tbody').append(partialViews.busTimeTables(val));
-    });
-    $.each(result.time.saturday_turn, function(index, val) {
-      $('#saturdayTurn tbody').append(partialViews.busTimeTables(val));
-    });
-    $.each(result.time.sunday_go, function(index, val) {
-      $('#sundayGo tbody').append(partialViews.busTimeTables(val));
-    });
-    $.each(result.time.sunday_turn, function(index, val) {
-      $('#sundayTurn tbody').append(partialViews.busTimeTables(val));
-    });
+    $('#stops tbody').empty();
+    $('#timetableWeekdays tbody').empty();
+    $('#timetableSaturday tbody').empty();
+    $('#timetableSunday tbody').empty();
+    for (var i=0; i < helpers.max(result.stops.go.length, result.stops.turn.length); i++) {
+      $('#stops tbody').append(
+        partialViews.busStopTableRow(helpers.checkUndefinedBus(result.stops.go[i]), helpers.checkUndefinedBus(result.stops.turn[i]))
+      )
+    };
+    for (var i=0; i < helpers.max(result.timesheet.weekdays.go.length, result.timesheet.weekdays.turn.length); i++) {
+      $('#timetableWeekdays tbody').append(
+        partialViews.busTimeTableRow(helpers.checkUndefined(result.timesheet.weekdays.go[i]), helpers.checkUndefined(result.timesheet.weekdays.turn[i]))
+      );
+    };
+    for (var i=0; i < helpers.max(result.timesheet.saturday.go.length, result.timesheet.saturday.turn.length); i++) {
+      $('#timetableSaturday tbody').append(
+        partialViews.busTimeTableRow(helpers.checkUndefined(result.timesheet.saturday.go[i]), helpers.checkUndefined(result.timesheet.saturday.turn[i]))
+      );
+    };
+    for (var i=0; i < helpers.max(result.timesheet.sunday.go.length, result.timesheet.sunday.turn.length); i++) {
+      $('#timetableSunday tbody').append(
+        partialViews.busTimeTableRow(helpers.checkUndefined(result.timesheet.sunday.go[i]), helpers.checkUndefined(result.timesheet.sunday.turn[i]))
+      );
+    };
   };
   
-  partialViews.busTimeTables = function(time) {
-    return '<tr><td>' + time + '</td></tr>';
+  partialViews.busStopTableRow = function(go, turn) {
+    return '<tr><td>' + go.name + '<span class="district">' + go.district + '</span></td><td>' + turn.name + '<span class="district">' + turn.district + '</span></td></tr>';
+  };
+
+  partialViews.busTimeTableRow = function(go, turn) {
+    return '<tr><td>' + go + '</td><td>' + turn + '</td></tr>';
   };
   
   ajaxHandlers.searchStop = function() {
@@ -217,8 +227,8 @@ function App () {
     $('#gettingLocationMessage').hide();
     $('#locationFoundMessage span').text(parseInt(accuracy));
     $('#locationFoundMessage').fadeIn();
-    L.circle(latlng, accuracy / 2).addTo(map)
-    L.popup().setLatLng(latlng).setContent(messages.youAreHere).openOn(map)
+    L.circle(latlng, accuracy / 2).addTo(map);
+    L.popup().setLatLng(latlng).setContent(messages.youAreHere).openOn(map);
   };
 
   domBuilders.closestStopError = function(payload) {
@@ -250,6 +260,28 @@ function App () {
   
   helpers.onLocationError = function(payload) {
     domBuilders.closestStopError(payload);
+  };
+
+  helpers.max = function(num1, num2) {
+    if (num1 > num2) {return num1};
+    return num2;
+  };
+  
+  helpers.checkUndefinedBus = function(variable) {
+    if (typeof variable === 'undefined') {
+      return {
+        name: '',
+        district: ''
+      };
+    };
+    return variable;
+  };
+
+  helpers.checkUndefined = function(variable) {
+    if (typeof variable === 'undefined') {
+      return '';
+    };
+    return variable;
   };
 
 }

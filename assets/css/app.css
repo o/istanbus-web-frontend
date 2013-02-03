@@ -19,3 +19,8 @@ height: 300px;
 width: 100%;
 margin-bottom: 20px;
 }
+
+.district {
+color: gray;
+float: right;
+}

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/foundation.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
-    <link href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" rel="stylesheet" type="text/css" />
 </head>
 <body data-page-type="searchBus">
     <header class="row"></header>
@@ -42,73 +41,55 @@
     <section class="row" id="detail">
         <div id="busDetail">
             <div id="busInfo" class="twelve columns panel"></div>
-            <div id="busTimetables">
-                <table id="workdaysGo" class="six columns">
-                    <thead>
-                      <tr>
-                        <th>Haftaiçi Gidiş saatleri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <table id="workdaysTurn" class="six columns">
-                    <thead>
-                      <tr>
-                        <th>Haftaiçi Dönüş saatleri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>     
-                <table id="saturdayGo" class="six columns">
-                    <thead>
-                      <tr>
-                        <th>Cumartesi Gidiş saatleri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <table id="saturdayTurn" class="six columns">
-                    <thead>
-                      <tr>
-                        <th>Cumartesi Dönüş saatleri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <table id="sundayGo" class="six columns">
-                    <thead>
-                      <tr>
-                        <th>Pazar Gidiş saatleri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <table id="sundayTurn" class="six columns">
-                    <thead>
-                      <tr>
-                        <th>Pazar Dönüş saatleri</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
+            <table id="stops" class="twelve">
+                <thead>
+                  <tr>
+                    <th>Gidiş Durakları</th>
+                    <th>Dönüş Durakları</th>
+                  </tr>
+                </thead>
+                <tbody>
+                        
+                </tbody>
+            </table>
+            <table id="timetableWeekdays" class="twelve">
+                <thead>
+                  <tr>
+                    <th>Gidiş Saatleri</th>
+                    <th>Dönüş Saatleri</th>
+                  </tr>
+                </thead>
+                <tbody>
+                        
+                </tbody>
+            </table>
+            <table id="timetableSaturday" class="twelve">
+                <thead>
+                  <tr>
+                    <th>Gidiş Saatleri</th>
+                    <th>Dönüş Saatleri</th>
+                  </tr>
+                </thead>
+                <tbody>
+                        
+                </tbody>
+            </table>
+            <table id="timetableSunday" class="twelve">
+                <thead>
+                  <tr>
+                    <th>Gidiş Saatleri</th>
+                    <th>Dönüş Saatleri</th>
+                  </tr>
+                </thead>
+                <tbody>
+                        
+                </tbody>
+            </table>
         </div>
     </section>
     <footer class="row"></footer>
     <script src="assets/js/jquery.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>        
+    <script src="assets/js/jquery.foundation.accordion.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 </html>
