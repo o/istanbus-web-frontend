@@ -189,10 +189,10 @@ function App () {
     L.marker(result.location).addTo(map).bindPopup(result.name);
     $('#stopDetail table tbody').empty();    
     $('#stopInfo').html(partialViews.stopInfo(result));
-    if (result.bus_list.length > 0) {
+    if (result.bus.length > 0) {
       $('#stopResults').slideUp();
       $('#stopDetail').fadeIn();
-      $.each(result.bus_list, function(index, val) {
+      $.each(result.bus, function(index, val) {
         $('#stopDetail table tbody').append(partialViews.stopDetails(val));
       });    
     };
