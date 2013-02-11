@@ -36,7 +36,7 @@ function App () {
       stop: function(id){return params.apiEndpoint + '/search/stop/' + id}
     },
     solutions: {
-      howtogo: function(from, to) {return params.apiEndpoint + '/howtogo/from/' + from + '/to/' +  to}
+      howtogo: function(from, to) {return params.apiEndpoint + '/path/from/' + from + '/to/' +  to}
     },
     stop: {
       detail: function(id) {return params.apiEndpoint + '/stop/' + id},
@@ -59,7 +59,7 @@ function App () {
   };
   
   onLoadHandlers.post = function() {
-    //
+    helpers.clearInputsWhenFocused();
   };
     
   onLoadHandlers.searchStop = function() {
@@ -76,7 +76,67 @@ function App () {
     ajaxHandlers.searchBus();
     $(document).foundationAccordion();
   };
+
+  onLoadHandlers.howToGo = function() {
+    ajaxHandlers.searchFromStop();
+    ajaxHandlers.searchToStop();
+  };
   
+  ajaxHandlers.searchFromStop = function() {
+    $('#fromStopKeyword').keyup(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+      }
+      var keyword = $(this).val().trim();
+      $.get(routes.search.stop(keyword), function(results) {
+        domBuilders.searchHowToGo('from', results)
+      });  
+      }
+    );    
+  };
+  
+  ajaxHandlers.searchToStop = function() {
+    $('#toStopKeyword').keyup(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+      }
+      var keyword = $(this).val().trim();
+      $.get(routes.search.stop(keyword), function(results) {
+        domBuilders.searchHowToGo('to', results)
+      });  
+      }
+    );    
+  };  
+    
+  domBuilders.searchHowToGo = function(type, results) {
+    if (results.length > 0) {
+      $('#stopResults table tbody').empty();
+      $('#noResultMessage').fadeOut();
+      $('#stopResults').slideDown();
+      $('#howToGoDetail').fadeOut();
+      $.each(results, function(index, val) {
+        $('#stopResults table tbody').append(partialViews.searchStopResult(val));
+      });
+      $('#stopResults table tbody tr').click(function () {
+        $('#' + type + 'StopKeyword').data('stopId', $(this).data('stopId'))
+        $('#' + type + 'StopKeyword').val($(this).text());
+        $('#' + type + 'StopKeyword').css({'backgroundColor': '#DDD'})
+        $('#stopResults').slideUp();
+        ajaxHandlers.howToGo();
+      });
+    } else {
+      $('#noResultMessage').fadeIn();      
+    }
+  };
+
+  ajaxHandlers.howToGo = function() {
+    $.get(routes.solutions.howtogo($('#fromStopKeyword').data('stopId'), $('#toStopKeyword').data('stopId')), domBuilders.detailHowToGo);
+  };
+  
+  domBuilders.detailHowToGo = function(results) {
+    console.log(results);
+  };
+
   ajaxHandlers.searchBus = function() {
     $('#busKeyword').keyup(function(event) {
       if (event.which == 13) {
@@ -87,7 +147,7 @@ function App () {
       }
     );
   };
-  
+
   domBuilders.searchBus = function(results) {
     if (results.length > 0) {
       $('#busResults table tbody').empty();
@@ -196,7 +256,6 @@ function App () {
         $('#stopDetail table tbody').append(partialViews.stopDetails(val));
       });    
     };
-    
   };
 
   partialViews.stopDetails = function(bus) {
@@ -297,7 +356,14 @@ function App () {
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var d = R * c;
     return d.toFixed(0);
-  }
+  };
+  
+  helpers.clearInputsWhenFocused = function() {
+    $('input').focus(function() {
+      $(this).val('');
+      $(this).css({'backgroundColor': '#FFF'});
+    });
+  };
   
 }
 
