@@ -109,11 +109,11 @@ function App () {
   };  
     
   domBuilders.searchHowToGo = function(type, results) {
+    $('#howToGoDetail').fadeOut();
     if (results.length > 0) {
       $('#stopResults table tbody').empty();
       $('#noResultMessage').fadeOut();
       $('#stopResults').slideDown();
-      $('#howToGoDetail').fadeOut();
       $.each(results, function(index, val) {
         $('#stopResults table tbody').append(partialViews.searchStopResult(val));
       });
@@ -134,7 +134,23 @@ function App () {
   };
   
   domBuilders.detailHowToGo = function(results) {
-    console.log(results);
+    $('#howToGoDetail').fadeIn();
+    $('#howToGoInfo span').text(results.solutions.length);
+    $('#howToGoSolutions').empty();
+    $.each(results.solutions, function(s, solution) {
+      $('#howToGoSolutions').append(partialViews.detailTransportTable(s))
+      $.each(solution.transports, function(t, transport) {
+        $('#solution-' + s).append(partialViews.detailTransportRow(transport));
+      });
+    });
+  };
+  
+  partialViews.detailTransportTable = function(index) {
+    return '<table id="solution-' + index + '" class="twelve"><thead><tr><th>Biniş durağı</th><th>İniş durağı</th><th>Durak sayısı</th><th>Hatlar</th></tr></thead><tbody></tbody></table>';
+  };
+  
+  partialViews.detailTransportRow = function(transport) {
+    return '<tr><td>' + transport.from.name + '</td><td>' + transport.to.name + '</td><td>' + transport.stopCount + '</td><td>' + helpers.arrayToCommaSepList(transport.busList) + '</td></tr>';
   };
 
   ajaxHandlers.searchBus = function() {
@@ -248,7 +264,7 @@ function App () {
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
     L.marker(result.location).addTo(map).bindPopup(result.name);
     $('#stopDetail table tbody').empty();    
-    $('#stopInfo').html(partialViews.stopInfo(result));
+    $('#stopInfo h3 span').text(result.name);
     if (result.bus.length > 0) {
       $('#stopResults').slideUp();
       $('#stopDetail').fadeIn();
@@ -261,11 +277,7 @@ function App () {
   partialViews.stopDetails = function(bus) {
     return '<tr data-bus-id=' + bus.id + '><td>' + bus.id + '</td><td>' + bus.name + '</td></tr>';
   };
-  
-  partialViews.stopInfo = function(stop) {
-    return '<h3 class="subheader">' + stop.name  + ' durağından geçen otobüsler</h3>'
-  };
-  
+    
   ajaxHandlers.closestStop = function(latlng) {
     $.get(routes.stop.closest(latlng.lat, latlng.lng), function(json) {
       domBuilders.closestStop(json, latlng);
@@ -363,6 +375,13 @@ function App () {
       $(this).val('');
       $(this).css({'backgroundColor': '#FFF'});
     });
+  };
+  
+  helpers.arrayToCommaSepList = function(arr) {
+    if (arr.length > 1) {
+      return arr.join(", ");
+    };
+    return arr[0];
   };
   
 }

@@ -6,7 +6,7 @@ header {
 height: 100px;
 }
 
-#stopResults, #busResults, #stopDetail, #busDetail, #noResultMessage, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
+#stopResults, #busResults, #stopDetail, #busDetail, #howToGoDetail, #noResultMessage, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
 display: none;
 }
 
