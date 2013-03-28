@@ -23,6 +23,25 @@ header h1 span{
     top: 3px;
 }
 
+@media screen and (max-width: 480px){
+	header h1{
+		margin-left:10px;
+	}
+	
+	body{
+		padding:0 10px;
+	}
+	
+	.tabs dd{
+		float:none !important;
+	}
+}
+
+.tabs{
+	height:auto !important;
+	min-height:40px !important;
+}
+
 #stopResults, #busResults, #stopDetail, #busDetail, #howToGoDetail, #noResultMessage, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
 display: none;
 }
