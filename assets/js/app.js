@@ -24,7 +24,7 @@ function App () {
   var mapLayers = {
     ui: {
       marker: {},
-      popup: {},
+      popup: {}
     },
     vector: {
       circle: {}
@@ -130,27 +130,42 @@ function App () {
   };
 
   ajaxHandlers.howToGo = function() {
-    $.get(routes.solutions.howtogo($('#fromStopKeyword').data('stopId'), $('#toStopKeyword').data('stopId')), domBuilders.detailHowToGo);
+    var fromStop = $('#fromStopKeyword').data('stopId');
+    var toStop = $('#toStopKeyword').data('stopId');
+    if (fromStop && toStop) {
+      $.get(routes.solutions.howtogo(fromStop, toStop), domBuilders.detailHowToGo);
+    }
   };
-  
-  domBuilders.detailHowToGo = function(results) {
-    $('#howToGoDetail').fadeIn();
-    $('#howToGoInfo span').text(results.solutions.length);
-    $('#howToGoSolutions').empty();
-    $.each(results.solutions, function(s, solution) {
-      $('#howToGoSolutions').append(partialViews.detailTransportTable(s))
-      $.each(solution.transports, function(t, transport) {
-        $('#solution-' + s).append(partialViews.detailTransportRow(transport));
+
+  var displaySolutions = function(suggestions) {
+    $.each(suggestions, function(s, suggestion) {
+      $('#howToGoSolutions').append(partialViews.detailTransportTable(s));
+      $.each(suggestion.routes, function(r, route) {
+          $('#solution-' + s).append(partialViews.detailTransportRow(route));
       });
     });
   };
   
-  partialViews.detailTransportTable = function(index) {
-    return '<table id="solution-' + index + '" class="twelve"><thead><tr><th>Biniş durağı</th><th>İniş durağı</th><th>Durak sayısı</th><th>Hatlar</th></tr></thead><tbody></tbody></table>';
+  domBuilders.detailHowToGo = function(results) {
+    $('#howToGoDetail').fadeIn();
+
+    var suggestions = results.suggestions;
+    var perfectRoutes = results.perfectRoutes;
+    // merge arrays
+    perfectRoutes.push.apply(perfectRoutes, suggestions);
+
+    $('#howToGoInfo span').text(perfectRoutes.length);
+    $('#howToGoSolutions').empty();
+
+    displaySolutions(perfectRoutes);
   };
   
-  partialViews.detailTransportRow = function(transport) {
-    return '<tr><td>' + transport.from.name + '</td><td>' + transport.to.name + '</td><td>' + transport.stopCount + '</td><td>' + helpers.arrayToCommaSepList(transport.busList) + '</td></tr>';
+  partialViews.detailTransportTable = function(index) {
+    return '<table id="solution-' + index + '" class="twelve"><thead><tr><th>Biniş durağı</th><th>İniş durağı</th><th>Hat No</th><th>Hat</th></tr></thead><tbody></tbody></table>';
+  };
+  
+  partialViews.detailTransportRow = function(route) {
+    return '<tr><td>' + route.from.name + '</td><td>' + route.to.name + '</td><td>' + route.bus.id + '</td><td>' + route.bus.name + '</td></tr>';
   };
 
   ajaxHandlers.searchBus = function() {
@@ -252,7 +267,8 @@ function App () {
   };
 
   partialViews.searchStopResult = function(stop) {
-    return '<tr data-stop-id=' + stop.id + '><td>' + stop.name + '</td></tr>';
+    var stopDisplayName = stop.name + ' (' + stop.district + ')';
+    return '<tr data-stop-id=' + stop.id + '><td>' + stopDisplayName + '</td></tr>';
   };
 
   ajaxHandlers.stopDetails = function(id) {
