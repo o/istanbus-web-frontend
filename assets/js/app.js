@@ -138,7 +138,6 @@ function App () {
   };
 
   domBuilders.displaySolutions = function(suggestions) {
-    console.log(suggestions)
     $.each(suggestions, function(s, suggestion) {
       $('#howToGoSolutions').append(partialViews.detailTransportTable(s));
       $.each(suggestion.routes, function(r, route) {
@@ -150,7 +149,7 @@ function App () {
   domBuilders.detailHowToGo = function(results) {
     $('#howToGoDetail').fadeIn();
 
-    combinedRoutes = results.suggestions.concat(results.perfectRoutes);
+    combinedRoutes = results.perfectRoutes.concat(results.suggestions);
 
     $('#howToGoInfo span').text(combinedRoutes.length);
     $('#howToGoSolutions').empty();
