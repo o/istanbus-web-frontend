@@ -137,7 +137,8 @@ function App () {
     }
   };
 
-  var displaySolutions = function(suggestions) {
+  domBuilders.displaySolutions = function(suggestions) {
+    console.log(suggestions)
     $.each(suggestions, function(s, suggestion) {
       $('#howToGoSolutions').append(partialViews.detailTransportTable(s));
       $.each(suggestion.routes, function(r, route) {
@@ -149,15 +150,12 @@ function App () {
   domBuilders.detailHowToGo = function(results) {
     $('#howToGoDetail').fadeIn();
 
-    var suggestions = results.suggestions;
-    var perfectRoutes = results.perfectRoutes;
-    // merge arrays
-    perfectRoutes.push.apply(perfectRoutes, suggestions);
+    combinedRoutes = results.suggestions.concat(results.perfectRoutes);
 
-    $('#howToGoInfo span').text(perfectRoutes.length);
+    $('#howToGoInfo span').text(combinedRoutes.length);
     $('#howToGoSolutions').empty();
 
-    displaySolutions(perfectRoutes);
+    domBuilders.displaySolutions(combinedRoutes);
   };
   
   partialViews.detailTransportTable = function(index) {
