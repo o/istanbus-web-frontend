@@ -12,7 +12,6 @@ function App () {
     apiEndpoint: 'http://api.istanbus.org',
     defaultZoom: 8,
     stopDetailZoom: 15,
-    closestStopsZoom: 14,
     maxZoom: 18,
     styleId: 998,
     tileLayerUrl: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
@@ -47,6 +46,9 @@ function App () {
       timesheet: function(id) {return params.apiEndpoint + '/bus/' + id + '/timesheet'},
       stopsGo: function(id) {return params.apiEndpoint + '/bus/' + id + '/stops/go'},
       stopsCome: function(id) {return params.apiEndpoint + '/bus/' + id + '/stops/come'}
+    },
+    misc: {
+      routing: function(from, to) {return 'http://routes.cloudmade.com/' + params.cloudMadeApiKey + '/api/0.3/' + from + ',' + to + '/foot.js?callback=?'}
     }
   };
 
@@ -264,8 +266,7 @@ function App () {
   };
 
   partialViews.searchStopResult = function(stop) {
-    var stopDisplayName = stop.name + ' (' + stop.district + ')';
-    return '<tr data-stop-id=' + stop.id + '><td>' + stopDisplayName + '</td></tr>';
+    return '<tr data-stop-id=' + stop.id + '><td>' + stop.name + ' (' + stop.district + ')' + '</td></tr>';
   };
 
   ajaxHandlers.stopDetails = function(id) {
@@ -304,7 +305,8 @@ function App () {
         $('#stopResults table tbody').append(partialViews.searchStopResult(val));
         L.marker(val.location).addTo(map).bindPopup(val.name + '</br>(Yaklaşık ' + helpers.calculateDistance(latlng.lat, latlng.lng, val.location[0], val.location[1]) + ' m)');
       }); 
-      map.setZoom(params.closestStopsZoom);
+      map.fitBounds(results.map(function(r){return r.location}));
+      ajaxHandlers.closestStopRouting(latlng.lat + ',' + latlng.lng, results[0].location)
     } else {
       $('#noResultMessage').fadeIn();
     }
@@ -322,6 +324,14 @@ function App () {
     $('#gettingLocationMessage').hide();
     $('#locationErrorMessage').fadeIn();
     map.setView(params.istanbulLatLon, params.defaultZoom);
+  };
+
+  domBuilders.closestStopRouting = function(routing_payload) {
+    L.polyline(routing_payload.route_geometry, {color: 'red'}).addTo(map);
+  };
+
+  ajaxHandlers.closestStopRouting = function(from, to) {
+    $.getJSON(routes.misc.routing(from,to), domBuilders.closestStopRouting);
   };
 
   helpers.initializeMap = function() {
@@ -388,13 +398,6 @@ function App () {
       $(this).val('');
       $(this).css({'backgroundColor': '#FFF'});
     });
-  };
-  
-  helpers.arrayToCommaSepList = function(arr) {
-    if (arr.length > 1) {
-      return arr.join(", ");
-    };
-    return arr[0];
   };
   
 }
