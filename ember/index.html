@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/foundation.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+    <header class="row">
+      <h1>istanbus<span>beta</span></h1>
+    </header>
+    <nav class="row">
+      <dl class="tabs">
+        {{#linkTo 'busSearch' tagName="dd" }}
+          <a {{bindAttr href="view.href"}}>Otobus</a>
+        {{/linkTo}}
+
+        {{#linkTo 'stopSearch' tagName="dd"}}
+          <a {{bindAttr href="view.href"}}>Durak</a>
+        {{/linkTo}}
+
+        {{#linkTo 'pathSearch' tagName="dd"}}
+          <a {{bindAttr href="view.href"}}>Nasıl giderim</a>
+        {{/linkTo}}
+
+        {{#linkTo 'closestStops' tagName="dd"}}
+          <a {{bindAttr href="view.href"}}>En yakın durak</a>
+        {{/linkTo}}
+
+      </dl>
+    </nav>
+    {{ outlet }}
+  </script>
+
+  <script type="text/x-handlebars" id="busSearch">
+    <section class="row" id="search">
+      <form>
+        <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı">
+        {{view App.AutoCompleteTextField valueBinding="keyword" }}
+        {{searching}}
+      </form>
+    </section>
+    <section class="row" id="results">
+      {{#if results}}
+          <div id="busResults">
+            <table class="twelve">
+              <thead>
+              <tr>
+                <th>Otobüs kodu</th>
+                <th>Hat adı</th>
+              </tr>
+              </thead>
+              <tbody>
+              {{#each results}}
+                {{#linkTo 'bus' id tagName='tr'}}
+                  <td>{{id}}</td>
+                  <td>{{name}}</td>
+                {{/linkTo}}
+              {{/each}}
+              </tbody>
+            </table>
+          </div>
+      {{else}}
+        {{#if keyword}}
+          <div class="alert-box alert">Sonuç bulunamadı.</div>
+        {{/if}}
+      {{/if}}
+    </section>
+  </script>
+
+  <script type="text/x-handlebars" id="pathSearch">
+    <section class="row" id="pathSearchSection">
+      <form>
+        <input class="six columns" type="text" id="fromStopKeyword" placeholder="Nereden ?">
+        <input class="six columns" type="text" id="toStopKeyword" placeholder="Nereye ?">
+      </form>
+    </section>
+  </script>
+
+  <script type="text/x-handlebars" id="stopSearch">
+    <section class="row" id="stopSearchSection">
+      <form>
+        <input class="twelve columns" type="text" id="stopKeyword" placeholder="Durak adı">
+      </form>
+    </section>
+  </script>
+
+  <script type="text/x-handlebars" id="closestStops">
+  </script>
+
+  <script type="text/x-handlebars" id="bus">
+    <h1>Otobus</h1>
+    <h2>{{id}}</h2>
+    <h3>{{name}}</h3>
+  </script>
+
+  <script type="text/x-handlebars" id="stop">
+    <h1>Durak</h1>
+    <h2>{{id}}</h2>
+    <h3>{{name}}</h3>
+  </script>
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
+  <script src="js/libs/ember-1.0.0-rc.3.js"></script>
+  <script src="js/libs/ember-data-latest.js"></script>
+  <script src="js/libs/jquery.foundation.accordion.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
