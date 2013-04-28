@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Ember Starter Kit</title>
+<title>istanbus</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/foundation.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
@@ -40,9 +40,7 @@
   <script type="text/x-handlebars" id="busSearch">
     <section class="row" id="search">
       <form>
-        <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı">
-        {{view App.AutoCompleteTextField valueBinding="keyword" }}
-        {{searching}}
+        {{view App.AutoCompleteTextField placeholder="Hat kodu veya adı" valueBinding="keyword" }}
       </form>
     </section>
     <section class="row" id="results">
@@ -85,8 +83,32 @@
   <script type="text/x-handlebars" id="stopSearch">
     <section class="row" id="stopSearchSection">
       <form>
-        <input class="twelve columns" type="text" id="stopKeyword" placeholder="Durak adı">
+        {{view App.AutoCompleteTextField placeholder="Durak adı" valueBinding="keyword" }}
       </form>
+    </section>
+    <section class="row">
+      {{#if results}}
+        <div id="stopResults">
+          <table class="twelve">
+            <thead>
+            <tr>
+              <th>Durak Adı</th>
+            </tr>
+            </thead>
+            <tbody>
+              {{#each results}}
+                {{#linkTo 'stop' id tagName='tr'}}
+                  <td>{{name}} ({{district}})</td>
+                {{/linkTo}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{else}}
+        {{#if keyword}}
+          <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
+        {{/if}}
+      {{/if}}
     </section>
   </script>
 
@@ -94,20 +116,115 @@
   </script>
 
   <script type="text/x-handlebars" id="bus">
-    <h1>Otobus</h1>
-    <h2>{{id}}</h2>
-    <h3>{{name}}</h3>
+    <section class="row" id="detail">
+      <div id="busDetail">
+        <h2>{{id}} <small>{{name}}</small></h2>
+        <ul class="accordion">
+          <li>
+            <div class="title">
+              <h5>Duraklar</h5>
+            </div>
+            <div class="content">
+              <table id="stops" class="twelve">
+                <thead>
+                <tr>
+                  <th>Gidiş</th>
+                  <th>Dönüş</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </li>
+          <li>
+            <div class="title">
+              <h5>Haftaiçi kalkış saatleri</h5>
+            </div>
+            <div class="content">
+              <table id="timetableWeekdays" class="twelve">
+                <thead>
+                <tr>
+                  <th>Gidiş</th>
+                  <th>Dönüş</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </li>
+          <li>
+            <div class="title">
+              <h5>Cumartesi kalkış saatleri</h5>
+            </div>
+            <div class="content">
+              <table id="timetableSaturday" class="twelve">
+                <thead>
+                <tr>
+                  <th>Gidiş Saatleri</th>
+                  <th>Dönüş Saatleri</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </li>
+          <li>
+            <div class="title">
+              <h5>Pazar kalkış saatleri</h5>
+            </div>
+            <div class="content">
+              <table id="timetableSunday" class="twelve">
+                <thead>
+                <tr>
+                  <th>Gidiş Saatleri</th>
+                  <th>Dönüş Saatleri</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
   </script>
 
   <script type="text/x-handlebars" id="stop">
-    <h1>Durak</h1>
-    <h2>{{id}}</h2>
-    <h3>{{name}}</h3>
+    <section class="row">
+      <div id="stopDetail">
+        <div id="map" class="twelve columns"></div>
+        <div id="stopInfo" class="twelve columns panel"><h3 class="subheader"><span>{{name}}</span> durağından geçen otobüsler</h3></div>
+        <table class="twelve">
+          <thead>
+          <tr>
+            <th>Otobüs kodu</th>
+            <th>Hat adı</th>
+          </tr>
+          </thead>
+          <tbody>
+            {{#each bus}}
+              {{#linkTo 'bus' id tagName='tr'}}
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+              {{/linkTo}}
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
   </script>
 
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
-  <script src="js/libs/ember-1.0.0-rc.3.js"></script>
+  <script src="js/libs/ember-latest.js"></script>
   <script src="js/libs/ember-data-latest.js"></script>
   <script src="js/libs/jquery.foundation.accordion.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>

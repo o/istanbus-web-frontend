@@ -1,19 +1,42 @@
 App = Ember.Application.create({
   ready: function () {
+    $(document).foundationAccordion();
     console.log('istanbus is ready');
   },
   LOG_TRANSITIONS: true
 });
 
+App.RESTSerializer = DS.RESTSerializer.extend({
+  init: function() {
+    this._super();
+    this.map('App.Stop',{
+      bus: {
+        embedded: 'always'
+      }
+    });
+  }
+});
+
 App.Store = DS.Store.extend({
   revision: 12,
   adapter: DS.RESTAdapter.extend({
-    namespace: "api"
+    namespace: "api",
+    serializer: App.RESTSerializer
   })
 });
 
 DS.RESTAdapter.configure("plurals", {
-  bus : "bus"
+  bus : "bus",
+  stop: "stop"
+});
+
+DS.RESTAdapter.registerTransform('geoPoint', {
+  serialize: function(value) {
+    return [value.get('latitude'), value.get('longitude')];
+  },
+  deserialize: function(value) {
+    return Ember.create({ latitude: value[0], longitude: value[1] });
+  }
 });
 
 App.Router.map(function() {
@@ -27,8 +50,15 @@ App.Router.map(function() {
 
 // models
 App.BusSearch = Ember.Object.extend();
+App.StopSearch = Ember.Object.extend();
 App.Bus = DS.Model.extend({
   name: DS.attr('string')
+});
+
+App.Stop = DS.Model.extend({
+  name: DS.attr('string'),
+  location: DS.attr('geoPoint'),
+  bus: DS.hasMany('App.Bus', { embedded: 'always' })
 });
 
 // routes
@@ -45,21 +75,30 @@ App.BusRoute = Ember.Route.extend({
   }
 });
 
+App.StopRoute = Ember.Route.extend({
+  model: function(params) {
+    return App.Stop.find(params.stopId);
+  }
+});
+
 // controllers
-App.BusSearchController = Ember.Controller.extend({
+App.SearchController = Ember.Controller.extend({
   keyword: null,
   results : [],
+  type: null,
+  objectModel: null,
   search: function() {
     var results = [];
     var keyword = this.get('keyword');
 
+    var url = "/api/search/" + this.type + "/" + keyword;
     $.ajax({
-      url: "/api/search/bus/" + keyword,
+      url: url,
       dataType: 'json',
       context: this,
       success: function(response) {
         response.forEach(function(bus) {
-          results.addObject(App.BusSearch.create(bus));
+          results.addObject(this.objectModel.create(bus));
         }, this)
       }
     });
@@ -67,8 +106,19 @@ App.BusSearchController = Ember.Controller.extend({
   }
 });
 
+App.StopSearchController = App.SearchController.extend({
+  objectModel: App.StopSearch,
+  type: "stop"
+});
+
+App.BusSearchController = App.SearchController.extend({
+  objectModel: App.BusSearch,
+  type: "bus"
+});
+
 // views
 App.AutoCompleteTextField = Ember.TextField.extend({
+  classNames: ["twelve", "columns"],
   keyUp: function() {
     this.get('controller').search();
   }

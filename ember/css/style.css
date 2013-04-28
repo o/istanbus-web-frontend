@@ -42,7 +42,7 @@ header h1 span{
     min-height:40px !important;
 }
 
-#stopResults, #stopDetail, #busDetail, #howToGoDetail, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
+#howToGoDetail, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
     display: none;
 }
 
