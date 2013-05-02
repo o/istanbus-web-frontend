@@ -160,7 +160,7 @@ function App () {
   };
   
   partialViews.detailTransportTable = function(index) {
-    return '<table id="solution-' + index + '" class="twelve"><thead><tr><th>Biniş durağı</th><th>İniş durağı</th><th>Hat No</th><th>Hat</th></tr></thead><tbody></tbody></table>';
+    return '<table id="solution-' + index + '" class="twelve"><thead><tr><th class="three">Biniş durağı</th><th class="three">İniş durağı</th><th class="one">Hat No</th><th class="five">Hat</th></tr></thead><tbody></tbody></table>';
   };
   
   partialViews.detailTransportRow = function(route) {
