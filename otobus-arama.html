@@ -1,6 +1,7 @@
 <section class="row" id="search">
   <form>
-    <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı" ng-model="keyword" search-on-key-up search-index="bus">
+    <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı"
+           ng-model="keyword" search-on-key-up search-index="bus">
   </form>
 </section>
 <section class="row" id="results">
@@ -14,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="bus in searchResults" ng-click="routeBus(bus.id)">
+        <tr ng-repeat="bus in searchResults" route-on-click route-url="/otobus/{{bus.id}}">
           <td>{{bus.id}}</td>
           <td>{{bus.name}}</td>
         </tr>

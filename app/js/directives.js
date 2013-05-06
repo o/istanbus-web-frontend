@@ -14,3 +14,18 @@ app.directive('searchOnKeyUp', function(SearchService) {
     }
   };
 });
+
+app.directive('routeOnClick', function($location) {
+  return {
+    restrict: "A",
+    link: function(scope, element, attributes) {
+      element.bind('click', function() {
+        // When an event outside of angular('click' event) need to change inside of angular
+        // the changes should occur inside of scope.$apply
+        scope.$apply(function(){
+          $location.path(attributes.routeUrl);
+        });
+      });
+    }
+  };
+});

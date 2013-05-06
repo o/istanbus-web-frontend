@@ -1,11 +1,12 @@
 <section class="row" id="search">
   <form>
-    <input class="twelve columns" type="text" id="stopKeyword" placeholder="Durak adı">
+    <input class="twelve columns" type="text" id="stopKeyword" placeholder="Durak adı"
+           ng-model="keyword" search-on-key-up search-index="stop">
   </form>
 </section>
 <section class="row" id="results">
-  <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
-  <div id="stopResults">
+  <div id="noResultMessage" ng-show="hasNoResult()" class="alert-box alert">Sonuç bulunamadı.</div>
+  <div id="stopResults" ng-show="searchResults">
     <table class="twelve">
       <thead>
       <tr>
@@ -13,25 +14,9 @@
       </tr>
       </thead>
       <tbody>
-
-      </tbody>
-    </table>
-  </div>
-</section>
-<section class="row" id="detail">
-  <div id="stopDetail">
-    <div id="map" class="twelve columns"></div>
-    <div id="stopInfo" class="twelve columns panel"><h3 class="subheader"><span>..</span> durağından geçen otobüsler
-    </h3></div>
-    <table class="twelve">
-      <thead>
-      <tr>
-        <th>Otobüs kodu</th>
-        <th>Hat adı</th>
-      </tr>
-      </thead>
-      <tbody>
-
+        <tr ng-repeat="stop in searchResults" route-on-click route-url="/durak/{{stop.id}}">
+          <td>{{stop.name}} ({{stop.district || ''}})</td>
+        </tr>
       </tbody>
     </table>
   </div>

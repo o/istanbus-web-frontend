@@ -16,8 +16,12 @@ istanbusServices.factory('SearchService',
     }
 );
 
-istanbusServices.factory('BusService',
-    function($resource) {
+istanbusServices.factory('BusService', function($resource) {
       return $resource('/api/bus/:id');
+    }
+);
+
+istanbusServices.factory('StopService', function($resource) {
+      return $resource('/api/stop/:id');
     }
 );
