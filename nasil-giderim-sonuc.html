@@ -1,0 +1,29 @@
+<section class="row">
+  <p><a ng-href="#/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#/durak/{{toStop.id}}">{{toStop.name}}</a>
+    için ulaşım çözümleri</p>
+</section>
+<section class="row" id="detail">
+  <div id="howToGoDetail" ng-show="fromStop != null && toStop != null">
+    <div id="howToGoInfo" ng-show="pathSearchResult.suggestions.length > 0" class="twelve columns panel"><span>{{pathSearchResult.suggestions.length}}</span> çözüm bulundu</div>
+    <div id="howToGoSolutions">
+      <table class="twelve" ng-repeat="perfectRoute in pathSearchResult.perfectRoutes.concat(pathSearchResult.suggestions)">
+        <thead>
+        <tr>
+          <th class="three">Biniş durağı</th>
+          <th class="three">İniş durağı</th>
+          <th class="one">Hat No</th>
+          <th class="five">Hat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="route in perfectRoute.routes">
+          <td route-on-click route-url="/durak/{{route.from.id}}">{{route.from.name}}</td>
+          <td route-on-click route-url="/durak/{{route.to.id}}">{{route.to.name}}</td>
+          <td route-on-click route-url="/otobus/{{route.bus.id}}">{{route.bus.id}}</td>
+          <td route-on-click route-url="/otobus/{{route.bus.id}}">{{route.bus.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

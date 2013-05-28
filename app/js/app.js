@@ -32,5 +32,10 @@ app.config(function($routeProvider) {
     controller: "PathSearchController"
   });
 
+  $routeProvider.when('/nasil-giderim/nerden/:fromStopId/nereye/:toStopId', {
+    templateUrl: "nasil-giderim-sonuc.html",
+    controller: "PathSearchResultController"
+  });
+
   $routeProvider.otherwise({ redirectTo : '/otobus-arama' });
 });

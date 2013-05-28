@@ -3,6 +3,7 @@ app.directive('searchOnKeyUp', function(SearchService) {
   return {
     restrict: "A",
     link: function(scope, element, attributes) {
+      scope.searchResults = [];
       element.bind('keyup', function() {
         var keywordField = attributes.ngModel;
         var keyword = scope[keywordField];

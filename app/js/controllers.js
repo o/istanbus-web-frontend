@@ -60,7 +60,7 @@ app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearc
   });
 });
 
-app.controller("PathSearchController", function($scope, $routeParams, PathSearchService) {
+app.controller("PathSearchController", function($scope, $location) {
   $scope.fromKeyword = "";
   $scope.toKeyword = "";
 
@@ -69,9 +69,8 @@ app.controller("PathSearchController", function($scope, $routeParams, PathSearch
 
   $scope.searchMode = "from" || "to";
 
-  $scope.pathSearchResult = null;
-
   $scope.selectStop = function(stop) {
+
     var searchMode = $scope.searchMode;
     $scope[searchMode + "Stop"] = stop;
     $scope[searchMode + "Keyword"] = stop.name;
@@ -80,21 +79,42 @@ app.controller("PathSearchController", function($scope, $routeParams, PathSearch
     var toStop = $scope.toStop;
     if (fromStop && toStop)
     {
-      $scope.pathSearchResult = PathSearchService.search({
-        fromStopId : fromStop.id,
-        toStopId: toStop.id
-      });
+      var resultPage = '/nasil-giderim/nerden/' + fromStop.id +'/nereye/' + toStop.id;
+      $location.path(resultPage);
     }
-  }
+  };
 
   $scope.setMode = function(mode) {
     $scope[mode + "Stop"] = null;
     $scope.searchMode = mode;
-  }
+  };
+
   $scope.hasNoResult = function () {
-    var keyword = $scope[$scope.searchMode + "Keyword"];
-    return $scope.pathSearchResult == null && keyword.length > 0 && $scope.searchResults && $scope.searchResults.length == 0;
-  }
+    return $scope.getCurrentKeyword() && $scope.searchResults.length == 0;
+  };
 
+  $scope.showStopResults = function() {
+    return $scope.getCurrentStop() == null && $scope.getCurrentKeyword().length > 0 && $scope.searchResults.length > 0;
+  };
 
+  $scope.getCurrentKeyword = function() {
+    var searchMode = $scope.searchMode;
+    return $scope[searchMode + 'Keyword'];
+  };
+
+  $scope.getCurrentStop = function() {
+    var searchMode = $scope.searchMode;
+    return $scope[searchMode + 'Stop'];
+  };
+
+});
+
+app.controller("PathSearchResultController", function ($scope, $routeParams, PathSearchService, StopService) {
+  $scope.fromStop = StopService.get({id: $routeParams.fromStopId});
+  $scope.toStop = StopService.get({id: $routeParams.toStopId});
+
+  $scope.pathSearchResult = PathSearchService.search({
+    fromStopId : $routeParams.fromStopId,
+    toStopId: $routeParams.toStopId
+  });
 });
