@@ -1,6 +1,8 @@
 <section class="row">
-  <p><a ng-href="#/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#/durak/{{toStop.id}}">{{toStop.name}}</a>
-    için ulaşım çözümleri</p>
+  <div class="twelve columns panel honeydew">
+    <p><a ng-href="#/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#/durak/{{toStop.id}}">{{toStop.name}}</a>
+      için ulaşım çözümleri</p>
+  </div>
 </section>
 <section class="row" id="detail">
   <div id="howToGoDetail" ng-show="fromStop != null && toStop != null">
