@@ -1,56 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>iett nasıl giderim ? - Istanbus</title>
-    <meta content="tr" http-equiv="Content-Language"></meta>
-    <meta name="description" content="iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri. "></meta>
-    <meta name="keywords" content="iett, ido, iett nasıl giderim, istanbul nasıl giderim, istanbul ulaşım, oraya nasıl giderim, ulaşım çözümü, en kısa yol"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/css/foundation.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
-</head>
-<body data-page-type="howToGo">
-    <header class="row">
-    	<h1>istanbus<span>beta</span></h1>
-    </header>
-    <nav class="row">
-        <dl class="tabs">
-          <dd><a id="busSearchLink" href="otobus-arama.html">Otobus</a></dd>
-          <dd><a id="stopSearchLink" href="durak-arama.html">Durak</a></dd>
-          <dd class="active"><a id="howToGoLink" href="nasil-giderim.html">Nasıl giderim</a></dd>
-          <dd><a id="closestStopLink" href="en-yakin-durak.html">En yakın durak</a></dd>
-        </dl>
-    </nav>
-    <section class="row" id="search">
-      <form>
-          <input class="six columns" type="text" id="fromStopKeyword" placeholder="Nereden ?">
-          <input class="six columns" type="text" id="toStopKeyword" placeholder="Nereye ?">
-      </form>
-    </section>
-    <section class="row" id="results">
-        <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
-        <div id="stopResults">
-            <table class="twelve">
-                <thead>
-                  <tr>
-                    <th>Durak Adı</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    
-                </tbody>
-            </table>
-        </div>
-    </section>
-    <section class="row" id="detail">
-        <div id="howToGoDetail">
-            <div id="howToGoInfo" class="twelve columns panel"><span>0</span> çözüm bulundu</div>
-            <div id="howToGoSolutions"></div>
-        </div>
-    </section>
-    <footer class="row"></footer>
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/app.js"></script>
-</body>
-</html>
+<section class="row" id="search">
+  <form>
+    <input class="six columns" type="text" id="fromStopKeyword" placeholder="Nereden ?"
+           ng-class="{selectedInput: fromStop != null}"
+           ng-model="fromKeyword" search-on-key-up search-index="stop" ng-change="setMode('from')">
+    <input class="six columns" type="text" id="toStopKeyword" placeholder="Nereye ?"
+           ng-class="{selectedInput: toStop != null}"
+           ng-model="toKeyword" search-on-key-up search-index="stop" ng-change="setMode('to')">
+  </form>
+</section>
+<section class="row" id="results">
+  <div ng-show="hasNoResult()" id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
+  <div id="stopResults" ng-show="searchResults && searchResults.length > 0 && !pathSearchResult">
+    <table class="twelve">
+      <thead>
+      <tr>
+        <th>Durak Adı</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="stop in searchResults" ng-click="selectStop(stop)">
+          <td>{{stop.name}} ({{stop.district || ''}})</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="row" id="detail">
+  <div id="howToGoDetail">
+    <div id="howToGoInfo" ng-show="pathSearchResult != null" class="twelve columns panel"><span>{{pathSearchResult.suggestions.length}}</span> çözüm bulundu</div>
+    <div id="howToGoSolutions">
+      <table id="solution-0" class="twelve" ng-repeat="perfectRoute in pathSearchResult.perfectRoutes.concat(pathSearchResult.suggestions)">
+        <thead>
+        <tr>
+          <th class="three">Biniş durağı</th>
+          <th class="three">İniş durağı</th>
+          <th class="one">Hat No</th>
+          <th class="five">Hat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="route in perfectRoute.routes">
+          <td>{{route.from.name}}</td>
+          <td>{{route.to.name}}</td>
+          <td>{{route.bus.id}}</td>
+          <td>{{route.bus.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

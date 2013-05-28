@@ -42,7 +42,7 @@ header h1 span{
 	min-height:40px !important;
 }
 
-#howToGoDetail, #gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
+#gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
 display: none;
 }
 
@@ -59,4 +59,8 @@ margin-bottom: 20px;
 .district {
 color: gray;
 float: right;
+}
+
+input.selectedInput {
+  background-color: #DDD;
 }

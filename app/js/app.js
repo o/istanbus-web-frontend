@@ -1,9 +1,6 @@
 var app = angular.module("app", ['istanbusServices']);
 
-app.config(function($routeProvider, $locationProvider) {
-
-  // allow html5 push state
-  // $locationProvider.html5Mode(true);
+app.config(function($routeProvider) {
 
   $routeProvider.when('/otobus-arama', {
     templateUrl: "otobus-arama.html",
@@ -23,6 +20,16 @@ app.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/durak/:id', {
     templateUrl: "durak.html",
     controller: "StopController"
+  });
+
+  $routeProvider.when('/en-yakin-durak', {
+    templateUrl: "en-yakin-durak.html",
+    controller: "ClosestStopSearchController"
+  });
+
+  $routeProvider.when('/nasil-giderim', {
+    templateUrl: "nasil-giderim.html",
+    controller: "PathSearchController"
   });
 
   $routeProvider.otherwise({ redirectTo : '/otobus-arama' });

@@ -1,54 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>iett en yakın durak - Istanbus</title>
-    <meta content="tr" http-equiv="Content-Language"></meta>
-    <meta name="description" content="iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri. "></meta>
-    <meta name="keywords" content="iett, ido, iett durak, otobüs durakarı, istanbul otobüs durağı, durak arama, en yakın durak"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/css/foundation.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
-    <link href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" rel="stylesheet" type="text/css" />
-</head>
-<body data-page-type="closestStop">
-    <header class="row">
-    	<h1>istanbus<span>beta</span></h1>
-    </header>
-    <nav class="row">
-        <dl class="tabs">
-          <dd><a id="busSearchLink" href="otobus-arama.html">Otobus</a></dd>
-          <dd><a id="stopSearchLink" href="durak-arama.html">Durak</a></dd>
-          <dd><a id="howToGoLink" href="nasil-giderim.html">Nasıl giderim</a></dd>
-          <dd class="active"><a id="closestStopLink" href="en-yakin-durak.html">En yakın durak</a></dd>
-        </dl>
-    </nav>
-    <section class="row" id="detail">
-        <div id="gettingLocationMessage" class="alert-box">Konumunuz alınıyor.</div>
-        <div id="locationErrorMessage" class="alert-box alert">Konumunuz bulunamadı.</div>
-        <div id="locationFoundMessage" class="alert-box success">Konumunuz başarıyla alındı. (<span>100</span> metre doğruluk)</div>
-        <div id="closestStopDetail">
-            <div id="map" class="twelve columns"></div>
-        </div>
-    </section>
-    <section class="row" id="results">
-        <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
-        <div id="stopResults">
-            <table class="twelve">
-                <thead>
-                  <tr>
-                    <th>Durak Adı</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    
-                </tbody>
-            </table>
-        </div>
-    </section>
-    <footer class="row"></footer>
-    <script src="assets/js/jquery.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>        
-    <script src="assets/js/app.js"></script>
-</body>
-</html>
+<section class="row" id="detail">
+  <div id="gettingLocationMessage" class="alert-box">Konumunuz alınıyor.</div>
+  <div id="locationErrorMessage" class="alert-box alert">Konumunuz bulunamadı.</div>
+  <div id="locationFoundMessage" class="alert-box success">Konumunuz başarıyla alındı. (<span>100</span> metre doğruluk)
+  </div>
+  <div id="closestStopDetail">
+    <div id="map" class="twelve columns"></div>
+  </div>
+</section>
+<section class="row" id="results">
+  <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
+  <div id="stopResults">
+    <table class="twelve">
+      <thead>
+      <tr>
+        <th>Durak Adı</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="stop in searchResults" route-on-click route-url="/durak/{{stop.id}}">
+          <td>{{stop.name}} ({{stop.district || ''}})</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -4,7 +4,8 @@ app.directive('searchOnKeyUp', function(SearchService) {
     restrict: "A",
     link: function(scope, element, attributes) {
       element.bind('keyup', function() {
-        var keyword = scope.keyword;
+        var keywordField = attributes.ngModel;
+        var keyword = scope[keywordField];
         if (keyword.length == 0) return;
         scope.searchResults = SearchService.search({
           index: attributes.searchIndex,
@@ -25,6 +26,24 @@ app.directive('routeOnClick', function($location) {
         scope.$apply(function(){
           $location.path(attributes.routeUrl);
         });
+      });
+    }
+  };
+});
+
+app.directive('navigationUrl', function($location) {
+  return {
+    restrict: "A",
+    link: function(scope, element, attributes) {
+      var clazz = "active";
+      var path = attributes.navigationUrl;
+      scope.location = $location;
+      scope.$watch('location.path()', function(newPath) {
+        if (path === newPath) {
+          element.addClass(clazz);
+        } else {
+          element.removeClass(clazz);
+        }
       });
     }
   };

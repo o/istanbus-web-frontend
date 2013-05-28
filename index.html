@@ -28,10 +28,18 @@
   </header>
   <nav class="row">
     <dl class="tabs">
-      <dd class="active"><a id="busSearchLink" href="otobus-arama.html">Otobus</a></dd>
-      <dd><a id="stopSearchLink" href="durak-arama.html">Durak</a></dd>
-      <dd><a id="howToGoLink" href="nasil-giderim.html">Nasıl giderim</a></dd>
-      <dd><a id="closestStopLink" href="en-yakin-durak.html">En yakın durak</a></dd>
+      <dd navigation-url="/otobus-arama">
+        <a id="busSearchLink" ng-href="#/otobus-arama">Otobus</a>
+      </dd>
+      <dd navigation-url="/durak-arama">
+        <a id="stopSearchLink" ng-href="#/durak-arama">Durak</a>
+      </dd>
+      <dd navigation-url="/nasil-giderim">
+        <a id="howToGoLink" ng-href="#/nasil-giderim">Nasıl giderim</a>
+      </dd>
+      <dd navigation-url="/en-yakin-durak">
+        <a id="closestStopLink" ng-href="#/en-yakin-durak">En yakın durak</a>
+      </dd>
     </dl>
   </nav>
   <div ng-view></div>
