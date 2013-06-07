@@ -19,7 +19,9 @@
       </thead>
       <tbody>
         <tr ng-repeat="stop in searchResults">
-          <td><a ng-href="#/durak/{{stop.id}}" >{{stop.name}} ({{stop.district || ''}}) </a></td>
+          <td route-on-click="/durak/{{stop.id}}">
+            <a ng-href="#/durak/{{stop.id}}" >{{stop.name}} ({{stop.district || ''}})</a>
+          </td>
         </tr>
       </tbody>
     </table>

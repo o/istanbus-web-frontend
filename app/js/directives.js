@@ -25,7 +25,7 @@ app.directive('routeOnClick', function($location) {
         // When an event outside of angular('click' event) need to change inside of angular
         // the changes should occur inside of scope.$apply
         scope.$apply(function(){
-          $location.path(attributes.routeUrl);
+          $location.path(attributes.routeOnClick);
         });
       });
     }

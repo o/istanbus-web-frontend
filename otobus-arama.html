@@ -15,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="bus in searchResults">
+        <tr ng-repeat="bus in searchResults" route-on-click="/otobus/{{bus.id}}">
           <td>
             <a ng-href="#/otobus/{{bus.id}}">{{bus.id}}</a>
           </td>
