@@ -19,10 +19,18 @@
         </thead>
         <tbody>
         <tr ng-repeat="route in perfectRoute.routes">
-          <td route-on-click route-url="/durak/{{route.from.id}}">{{route.from.name}}</td>
-          <td route-on-click route-url="/durak/{{route.to.id}}">{{route.to.name}}</td>
-          <td route-on-click route-url="/otobus/{{route.bus.id}}">{{route.bus.id}}</td>
-          <td route-on-click route-url="/otobus/{{route.bus.id}}">{{route.bus.name}}</td>
+          <td>
+            <a ng-href="#/durak/{{route.from.id}}">{{route.from.name}}</a>
+          </td>
+          <td>
+            <a ng-href="#/durak/{{route.to.id}}">{{route.to.name}}</a>
+          </td>
+          <td>
+            <a ng-href="#/otobus/{{route.bus.id}}">{{route.bus.id}}</a>
+          </td>
+          <td>
+            <a ng-href="#/otobus/{{route.bus.id}}">{{route.bus.name}}</a>
+          </td>
         </tr>
         </tbody>
       </table>

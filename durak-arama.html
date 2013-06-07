@@ -14,8 +14,10 @@
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="stop in searchResults" route-on-click route-url="/durak/{{stop.id}}">
-          <td>{{stop.name}} ({{stop.district || ''}})</td>
+        <tr ng-repeat="stop in searchResults">
+          <td>
+            <a ng-href="#/durak/{{stop.id}}">{{stop.name}} ({{stop.district || ''}})</a>
+          </td>
         </tr>
       </tbody>
     </table>
