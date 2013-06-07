@@ -1,15 +1,16 @@
 <section class="row" id="detail">
-  <div id="gettingLocationMessage" class="alert-box">Konumunuz alınıyor.</div>
-  <div id="locationErrorMessage" class="alert-box alert">Konumunuz bulunamadı.</div>
-  <div id="locationFoundMessage" class="alert-box success">Konumunuz başarıyla alındı. (<span>100</span> metre doğruluk)
+  <div ng-show="gettingLocation" id="gettingLocationMessage" class="alert-box">Konumunuz alınıyor.</div>
+  <div ng-show="locationError" id="locationErrorMessage" class="alert-box alert">Konumunuz bulunamadı.</div>
+  <div ng-show="locationFound" id="locationFoundMessage" class="alert-box success">
+    Konumunuz başarıyla alındı. (<span>{{accuracy}}</span> metre doğruluk)
   </div>
   <div id="closestStopDetail">
     <div id="map" class="twelve columns"></div>
   </div>
 </section>
 <section class="row" id="results">
-  <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
-  <div id="stopResults">
+  <div ng-hide="searchResults" id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
+  <div ng-show="searchResults" id="stopResults">
     <table class="twelve">
       <thead>
       <tr>
@@ -17,8 +18,8 @@
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="stop in searchResults" route-on-click route-url="/durak/{{stop.id}}">
-          <td>{{stop.name}} ({{stop.district || ''}})</td>
+        <tr ng-repeat="stop in searchResults">
+          <td><a ng-href="#/durak/{{stop.id}}" >{{stop.name}} ({{stop.district || ''}}) </a></td>
         </tr>
       </tbody>
     </table>

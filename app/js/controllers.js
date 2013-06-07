@@ -41,23 +41,69 @@ app.controller("StopController", function ($scope, $routeParams, StopService) {
 });
 
 app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearchService) {
-  var map = L.map('map').setView([0, 0], 8);
-  L.tileLayer("http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    key: "5f9a0dab187a45cf8688a68cb55680a2",
-    styleId: 998
-  }).addTo(map);
 
-  map.locate({setView:true, enableHighAccuracy:true, maxZoom: 18});
-  map.on('locationfound', function(payload) {
-    var location = payload.latlng;
-    L.circle(location, payload.accuracy / 2).addTo(map);
-    L.popup().setLatLng(location).setContent("Buradasiniz.").openOn(map);
-    $scope.searchResults = ClosestStopSearchService.search({
-      latitude: location.lat,
-      longitude: location.lng
+  $scope.gettingLocation = true;
+  $scope.myLocation = null;
+  $scope.map = null;
+  $scope.locationFound = false;
+  $scope.locationError = false;
+  $scope.accuracy = 0;
+
+  $scope.initMap = function() {
+    var map = $scope.map = L.map('map').setView([0, 0], 8);
+    L.tileLayer("http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      key: "5f9a0dab187a45cf8688a68cb55680a2",
+      styleId: 998
+    }).addTo(map);
+
+    map.locate({setView:true, enableHighAccuracy:true, maxZoom: 18});
+    map.on('locationfound', function(payload) {
+      $scope.gettingLocation = false;
+      $scope.locationFound = true;
+      $scope.accuracy = payload.accuracy;
+
+      var location = payload.latlng;
+      var myLocation = $scope.myLocation = [location.lat, location.lng];
+      L.circle(location, payload.accuracy / 2).addTo(map);
+      L.popup().setLatLng(location).setContent("Buradasiniz.").openOn(map);
+
+      map.setView(myLocation, 15);
+      $scope.searchResults = ClosestStopSearchService.search(location);
     });
-  });
+
+    map.on('locationerror', function(payload) {
+      $scope.locationError = true;
+      $scope.gettingLocation = false;
+      map.setView([41.03842, 28.98705], 18);
+    });
+  }
+
+  $scope.$watch('searchResults', function (searchResults, oldValue) {
+    if (searchResults && searchResults.length > 0) {
+      var myLocation = $scope.myLocation;
+      myLocation = new L.LatLng(myLocation[0], myLocation[1]);
+
+      var map = $scope.map;
+
+      var locations = [];
+      for (var i in searchResults) {
+      	var result = searchResults[i];
+        var locationResult = result.location;
+
+        var location = new L.LatLng(locationResult[0], locationResult[1]);
+        locations.push(location);
+
+        var distance = Math.round(myLocation.distanceTo(location));
+        L.marker(locationResult).addTo(map).bindPopup(result.name + '</br>(Yaklaşık ' + distance + ' m)');
+      }
+
+      var bounds = new L.LatLngBounds(locations);
+      map.fitBounds(bounds);
+    }
+  }, true);
+
+  $scope.initMap();
 });
 
 app.controller("PathSearchController", function($scope, $location) {

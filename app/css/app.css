@@ -1,17 +1,17 @@
 body {
-margin: 20px 0px;
+    margin: 20px 0px;
 }
 
 header {
-height: 100px;
+    height: 100px;
 }
 
-header h1{
-	position:relative;
-	font-style:italic;
+header h1 {
+    position: relative;
+    font-style: italic;
 }
 
-header h1 span{
+header h1 span {
     background-color: #2BA6CB;
     border-radius: 30px 30px 30px 30px;
     color: #FFFFFF;
@@ -23,46 +23,42 @@ header h1 span{
     top: 3px;
 }
 
-@media screen and (max-width: 480px){
-	header h1{
-		margin-left:10px;
-	}
-	
-	body{
-		padding:0 10px;
-	}
-	
-	.tabs dd{
-		float:none !important;
-	}
+@media screen and (max-width: 480px) {
+    header h1 {
+        margin-left: 10px;
+    }
+
+    body {
+        padding: 0 10px;
+    }
+
+    .tabs dd {
+        float: none !important;
+    }
 }
 
-.tabs{
-	height:auto !important;
-	min-height:40px !important;
-}
-
-#gettingLocationMessage, #locationErrorMessage, #locationFoundMessage {
-display: none;
+.tabs {
+    height: auto !important;
+    min-height: 40px !important;
 }
 
 .clickable {
-cursor: pointer;
+    cursor: pointer;
 }
 
 #map {
-height: 300px;
-width: 100%;
-margin-bottom: 20px;
+    height: 400px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .district {
-color: gray;
-float: right;
+    color: gray;
+    float: right;
 }
 
 input.selectedInput {
-  background-color: #DDD;
+    background-color: #DDD;
 }
 
 .honeydew {

@@ -46,12 +46,12 @@ istanbusServices.factory('PathSearchService', function($resource) {
 );
 
 istanbusServices.factory('ClosestStopSearchService', function($resource) {
-    return $resource('/api/closest/lat/:latitude/lon/:longitude', {}, {
+    return $resource('/api/closest/lat/:lat/lon/:lng', {}, {
       search: {
         method: 'GET',
         params: {
-          latitude: 41.045311,
-          longitude: 29.034548
+          lat: 41.045311,
+          lng: 29.034548
         },
         isArray:true
       }
