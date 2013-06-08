@@ -30,6 +30,7 @@ app.controller("BusController", function ($scope, $routeParams, BusService) {
       var turn = currentData.turn;
 
       if (go.length == turn.length || (go.length == 0 && turn.length == 0)) {
+        currentData.max = go;
         return;
       }
       var smaller = go.length < turn.length ? go : turn;
