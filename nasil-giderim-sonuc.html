@@ -1,12 +1,19 @@
 <section class="row">
-  <div class="twelve columns panel honeydew">
+  <div ng-show="fromStop.name && toStop.name" class="twelve columns panel honeydew">
     <p><a ng-href="#/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#/durak/{{toStop.id}}">{{toStop.name}}</a>
       için ulaşım çözümleri</p>
   </div>
 </section>
+<section class="row">
+  <div ng-hide="pathSearchResult.suggestions.length > 0" class="alert-box">
+    Cozumler hesaplaniyor...
+  </div>
+  <div ng-show="pathSearchResult.suggestions.length > 0" class="alert-box success">
+    <span>{{pathSearchResult.suggestions.length}}</span> çözüm bulundu
+  </div>
+</section>
 <section class="row" id="detail">
   <div id="howToGoDetail" ng-show="fromStop != null && toStop != null">
-    <div id="howToGoInfo" ng-show="pathSearchResult.suggestions.length > 0" class="twelve columns panel"><span>{{pathSearchResult.suggestions.length}}</span> çözüm bulundu</div>
     <div id="howToGoSolutions" class="twelve float-left">
       <table class="twelve" ng-repeat="perfectRoute in pathSearchResult.perfectRoutes.concat(pathSearchResult.suggestions)">
         <thead>
