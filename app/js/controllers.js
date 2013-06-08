@@ -133,6 +133,13 @@ app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearc
 
       var bounds = new L.LatLngBounds(locations);
       map.fitBounds(bounds);
+
+      MapService.routing($scope.myLocation, searchResults[0].location)
+          .success(function(routing_payload){
+            L.polyline(routing_payload.route_geometry, {color: 'red'})
+                .addTo(map);
+          }
+      );
     }
   }, true);
 

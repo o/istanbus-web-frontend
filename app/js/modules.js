@@ -57,7 +57,8 @@ istanbusServices.factory('ClosestStopSearchService', function ($resource) {
     }
 );
 
-var MapService = function () {
+var MapService = function ($http) {
+  var $http = $http;
   var config = {
     defaultZoom: 8,
     stopDetailZoom: 15,
@@ -67,7 +68,7 @@ var MapService = function () {
     cloudMadeApiKey: '5f9a0dab187a45cf8688a68cb55680a2',
     defaultLatLon: [0, 0],
     istanbulLatLon: [41.045311, 29.034548]
-  }
+  };
 
   this.createMap = function () {
     var map = L.map('map');
@@ -78,9 +79,14 @@ var MapService = function () {
     }).addTo(map);
 
     return map;
-  }
+  };
+
+  this.routing = function(from, to) {
+    var cloudMadeRouteUrl = 'http://routes.cloudmade.com/' + config.cloudMadeApiKey + '/api/0.3/' + from + ',' + to + '/foot.js?callback=JSON_CALLBACK';
+    return $http.jsonp(cloudMadeRouteUrl);
+  };
 }
 
-angular.module('mapService', []).factory('MapService', function () {
-  return new MapService();
+angular.module('mapService', []).factory('MapService', function ($http) {
+  return new MapService($http);
 })
