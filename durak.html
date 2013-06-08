@@ -5,14 +5,15 @@
     <div id="stopInfo" class="twelve columns panel honeydew">
       <h3 class="subheader"><span>{{stop.name}}</span> durağından geçen otobüsler</h3>
     </div>
-    <table class="twelve">
-      <thead>
-      <tr>
-        <th>Otobüs kodu</th>
-        <th>Hat adı</th>
-      </tr>
-      </thead>
-      <tbody>
+    <div class="twelve float-left">
+      <table class="twelve">
+        <thead>
+        <tr>
+          <th>Otobüs kodu</th>
+          <th>Hat adı</th>
+        </tr>
+        </thead>
+        <tbody>
         <tr ng-repeat="bus in stop.bus" route-on-click="/otobus/{{bus.id}}">
           <td>
             <a ng-href="#/otobus/{{bus.id}}">{{bus.id}}</a>
@@ -21,7 +22,8 @@
             <a ng-href="#/otobus/{{bus.id}}">{{bus.name}}</a>
           </td>
         </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>

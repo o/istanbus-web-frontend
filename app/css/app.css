@@ -57,6 +57,10 @@ header h1 span {
     float: right;
 }
 
+.float-left {
+    float: left;
+}
+
 input.selectedInput {
     background-color: #DDD;
 }

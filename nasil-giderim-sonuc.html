@@ -7,7 +7,7 @@
 <section class="row" id="detail">
   <div id="howToGoDetail" ng-show="fromStop != null && toStop != null">
     <div id="howToGoInfo" ng-show="pathSearchResult.suggestions.length > 0" class="twelve columns panel"><span>{{pathSearchResult.suggestions.length}}</span> çözüm bulundu</div>
-    <div id="howToGoSolutions">
+    <div id="howToGoSolutions" class="twelve float-left">
       <table class="twelve" ng-repeat="perfectRoute in pathSearchResult.perfectRoutes.concat(pathSearchResult.suggestions)">
         <thead>
         <tr>
