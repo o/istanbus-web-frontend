@@ -6,10 +6,10 @@
 </section>
 <section class="row">
   <div ng-hide="pathSearchResult.suggestions.length > 0" class="alert-box">
-    Cozumler hesaplaniyor...
+    Ulaşım çözümleri hesaplanıyor...
   </div>
   <div ng-show="pathSearchResult.suggestions.length > 0" class="alert-box success">
-    <span>{{pathSearchResult.suggestions.length}}</span> çözüm bulundu
+    <span>{{pathSearchResult.suggestions.length + pathSearchResult.perfectRoutes.length}}</span> çözüm bulundu
   </div>
 </section>
 <section class="row" id="detail">
