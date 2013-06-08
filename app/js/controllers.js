@@ -10,6 +10,46 @@ app.controller("SearchController", function ($scope) {
 
 app.controller("BusController", function ($scope, $routeParams, BusService) {
   $scope.bus = BusService.get({id: $routeParams.id});
+  $scope.key = "stops";
+  $scope.currentData = null;
+
+  $scope.$watch('bus', function (bus, oldValue) {
+    $scope.refreshTable();
+  }, true);
+
+  var _getNested = function(key, object) {
+    var keys = key.split('.');
+    return object[keys[0]][keys[1]];
+  };
+
+  $scope.refreshTable = function() {
+    var key = $scope.key;
+    var currentData = $scope.currentData = key.indexOf('.') == -1 ? $scope.bus[key] : _getNested(key, $scope.bus);
+    if (currentData) {
+      var go = currentData.go;
+      var turn = currentData.turn;
+
+      if (go.length == turn.length || (go.length == 0 && turn.length == 0)) {
+        return;
+      }
+      var smaller = go.length < turn.length ? go : turn;
+      currentData.max = smaller == go ? turn : go;
+
+      var diff = Math.abs(go.length - turn.length);
+      for (var i = 0; i < diff; i++) {
+        smaller.push(null);
+      }
+    }
+
+  };
+
+  $scope.$watch('key', function(key, oldValue) {
+    $scope.refreshTable();
+  });
+
+  $scope.isActive = function(key) {
+    return $scope.key == key;
+  }
 });
 
 app.controller("StopController", function ($scope, $routeParams, StopService) {
