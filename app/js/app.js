@@ -1,4 +1,4 @@
-var app = angular.module("app", ['istanbusServices']);
+var app = angular.module("app", ['istanbusServices', 'mapService']);
 
 app.config(function($routeProvider) {
 

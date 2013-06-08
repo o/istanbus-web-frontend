@@ -53,7 +53,7 @@ app.controller("BusController", function ($scope, $routeParams, BusService) {
   }
 });
 
-app.controller("StopController", function ($scope, $routeParams, StopService) {
+app.controller("StopController", function ($scope, $routeParams, StopService, MapService) {
   $scope.stop = StopService.get({id: $routeParams.id});
 
   $scope.$watch('stop', function (newValue, oldValue) {
@@ -68,12 +68,8 @@ app.controller("StopController", function ($scope, $routeParams, StopService) {
       lat: stop.location[0],
       lng: stop.location[1]
     };
-    var map = $scope.map = L.map('map').setView(location, 15);
-    L.tileLayer("http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      key: "5f9a0dab187a45cf8688a68cb55680a2",
-      styleId: 998
-    }).addTo(map);
+    var map = $scope.map = MapService.createMap();
+    map.setView(location, 15);
 
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
     L.marker(location).addTo(map).bindPopup(stop.name);
@@ -81,7 +77,7 @@ app.controller("StopController", function ($scope, $routeParams, StopService) {
 
 });
 
-app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearchService) {
+app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearchService, MapService) {
 
   $scope.gettingLocation = true;
   $scope.myLocation = null;
@@ -91,12 +87,8 @@ app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearc
   $scope.accuracy = 0;
 
   $scope.initMap = function() {
-    var map = $scope.map = L.map('map').setView([0, 0], 8);
-    L.tileLayer("http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      key: "5f9a0dab187a45cf8688a68cb55680a2",
-      styleId: 998
-    }).addTo(map);
+    var map = $scope.map = MapService.createMap();
+    map.setView([0, 0], 8);
 
     map.locate({setView:true, enableHighAccuracy:true, maxZoom: 18});
     map.on('locationfound', function(payload) {
