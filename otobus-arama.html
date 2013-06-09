@@ -1,129 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>iett otobüs arama - Istanbus</title>
-    <meta content="tr" http-equiv="Content-Language"></meta>
-    <meta name="description" content="iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri. "></meta>
-    <meta name="keywords" content="iett, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/css/foundation.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
-</head>
-<body data-page-type="searchBus">
-    <header class="row">
-    	<h1>istanbus<span>beta</span></h1>
-    </header>
-    <nav class="row">
-        <dl class="tabs">
-          <dd class="active"><a id="busSearchLink" href="otobus-arama.html">Otobus</a></dd>
-          <dd><a id="stopSearchLink" href="durak-arama.html">Durak</a></dd>
-          <dd><a id="howToGoLink" href="nasil-giderim.html">Nasıl giderim</a></dd>
-          <dd><a id="closestStopLink" href="en-yakin-durak.html">En yakın durak</a></dd>
-        </dl>
-    </nav>
-    <section class="row" id="search">
-      <form>
-          <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı">
-      </form>
-    </section>
-    <section class="row" id="results">
-        <div id="noResultMessage" class="alert-box alert">Sonuç bulunamadı.</div>
-        <div id="busResults">
-            <table class="twelve">
-                <thead>
-                  <tr>
-                    <th>Otobüs kodu</th>
-                    <th>Hat adı</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
-    </section>
-    <section class="row" id="detail">
-        <div id="busDetail">
-            <ul class="accordion">
-              <li>
-                <div class="title">
-                  <h5>Duraklar</h5>
-                </div>
-                <div class="content">
-                    <table id="stops" class="twelve">
-                        <thead>
-                          <tr>
-                            <th>Gidiş</th>
-                            <th>Dönüş</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        
-                        </tbody>
-                    </table>
-                </div>
-              </li>
-              <li>
-                <div class="title">
-                  <h5>Haftaiçi kalkış saatleri</h5>
-                </div>
-                <div class="content">
-                    <table id="timetableWeekdays" class="twelve">
-                        <thead>
-                          <tr>
-                            <th>Gidiş</th>
-                            <th>Dönüş</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        
-                        </tbody>
-                    </table>
-                </div>
-              </li>
-              <li>
-                <div class="title">
-                  <h5>Cumartesi kalkış saatleri</h5>
-                </div>
-                <div class="content">
-                    <table id="timetableSaturday" class="twelve">
-                        <thead>
-                          <tr>
-                            <th>Gidiş Saatleri</th>
-                            <th>Dönüş Saatleri</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        
-                        </tbody>
-                    </table>                  
-                </div>
-              </li>
-              <li>
-                <div class="title">
-                  <h5>Pazar kalkış saatleri</h5>
-                </div>
-                <div class="content">
-                    <table id="timetableSunday" class="twelve">
-                        <thead>
-                          <tr>
-                            <th>Gidiş Saatleri</th>
-                            <th>Dönüş Saatleri</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        
-                        </tbody>
-                    </table>
-                </div>
-              </li>
-            </ul>            
-        </div>
-    </section>
-    <footer class="row"></footer>
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/jquery.foundation.accordion.js"></script>
-    <script src="assets/js/app.js"></script>
-</body>
-</html>
+<section class="row" id="search">
+  <form>
+    <input class="twelve columns" type="text" id="busKeyword" placeholder="Hat kodu veya adı"
+           ng-model="keyword" search-on-key-up search-index="bus">
+  </form>
+</section>
+<section class="row" id="results">
+  <div ng-show="hasNoResult()" class="alert-box alert">Sonuç bulunamadı.</div>
+  <div id="busResults" ng-show="searchResults">
+    <table class="twelve">
+      <thead>
+      <tr>
+        <th>Otobüs kodu</th>
+        <th>Hat adı</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="bus in searchResults" route-on-click="/otobus/{{bus.id}}">
+          <td>
+            <a ng-href="#/otobus/{{bus.id}}">{{bus.id}}</a>
+          </td>
+          <td>
+            <a ng-href="#/otobus/{{bus.id}}">{{bus.name}}</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

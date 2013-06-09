@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>iett otobüs arama - Istanbus</title>
+  <meta content="tr" http-equiv="Content-Language"></meta>
+  <meta name="description" content="iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri. "></meta>
+  <meta name="keywords" content="iett, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+  <script src="lib/js/angular.min.js"></script>
+  <script src="lib/js/angular-resource.min.js"></script>
+
+  <script src="app/js/app.js"></script>
+  <script src="app/js/controllers.js"></script>
+  <script src="app/js/modules.js"></script>
+  <script src="app/js/directives.js"></script>
+
+  <link rel="stylesheet" href="lib/css/foundation.css"/>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css"/>
+  <link rel="stylesheet" href="app/css/app.css"/>
+
+</head>
+<body>
+  <header class="row">
+    <h1>istanbus<span>beta</span></h1>
+  </header>
+  <nav class="row">
+    <dl class="tabs">
+      <dd navigation-url="/otobus-arama">
+        <a id="busSearchLink" ng-href="#/otobus-arama">Otobus</a>
+      </dd>
+      <dd navigation-url="/durak-arama">
+        <a id="stopSearchLink" ng-href="#/durak-arama">Durak</a>
+      </dd>
+      <dd navigation-url="/nasil-giderim">
+        <a id="howToGoLink" ng-href="#/nasil-giderim">Nasıl giderim</a>
+      </dd>
+      <dd navigation-url="/en-yakin-durak">
+        <a id="closestStopLink" ng-href="#/en-yakin-durak">En yakın durak</a>
+      </dd>
+    </dl>
+  </nav>
+  <div ng-view></div>
+  <footer class="row"></footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<section class="row" id="detail">
+  <div id="busDetail">
+    <div id="stopInfo" class="panel honeydew">
+      <h2>{{bus.id}}
+        <small>{{bus.name}}</small>
+      </h2>
+    </div>
+    <dl class="sub-nav">
+      <dd class="clickable" ng-click="key='stops'" ng-class="{active: isActive('stops')}">
+        <a>Duraklar</a>
+      </dd>
+      <dd class="clickable" ng-click="key='timesheet.weekdays'" ng-class="{active: isActive('timesheet.weekdays')}">
+        <a>Haftaiçi kalkış saatleri</a>
+      </dd>
+      <dd class="clickable" ng-click="key='timesheet.saturday'" ng-class="{active: isActive('timesheet.saturday')}">
+        <a>Cumartesi kalkış saatleri</a>
+      </dd>
+      <dd class="clickable" ng-click="key='timesheet.sunday'" ng-class="{active: isActive('timesheet.sunday')}">
+        <a>Pazar kalkış saatleri</a>
+      </dd>
+    </dl>
+    <table id="stops" class="twelve">
+      <thead>
+      <tr>
+        <th>Gidiş</th>
+        <th>Dönüş</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="(key, value) in currentData.max">
+        <td ng-show="currentData.go[key].name">
+          <a ng-href="#/durak/{{currentData.go[key].id}}">{{currentData.go[key].name}}</a>
+          <span class="district">{{currentData.go[key].district}}</span>
+        </td>
+        <td ng-show="currentData.turn[key].name">
+          <a ng-href="#/durak/{{currentData.turn[key].id}}">{{currentData.turn[key].name}}</a>
+          <span class="district">{{currentData.turn[key].district}}</span>
+        </td>
+        <td ng-hide="currentData.go[key].name">{{currentData.go[key]}}</td>
+        <td ng-hide="currentData.turn[key].name">{{currentData.turn[key]}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

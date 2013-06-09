@@ -1,0 +1,46 @@
+<section class="row">
+  <div ng-show="fromStop.name && toStop.name" class="twelve columns panel honeydew">
+    <p><a ng-href="#/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#/durak/{{toStop.id}}">{{toStop.name}}</a>
+      için ulaşım çözümleri</p>
+  </div>
+</section>
+<section class="row">
+  <div ng-hide="pathSearchResult.suggestions.length > 0" class="alert-box">
+    Ulaşım çözümleri hesaplanıyor...
+  </div>
+  <div ng-show="pathSearchResult.suggestions.length > 0" class="alert-box success">
+    <span>{{pathSearchResult.suggestions.length + pathSearchResult.perfectRoutes.length}}</span> çözüm bulundu
+  </div>
+</section>
+<section class="row" id="detail">
+  <div id="howToGoDetail" ng-show="fromStop != null && toStop != null">
+    <div id="howToGoSolutions" class="twelve float-left">
+      <table class="twelve" ng-repeat="perfectRoute in pathSearchResult.perfectRoutes.concat(pathSearchResult.suggestions)">
+        <thead>
+        <tr>
+          <th class="three">Biniş durağı</th>
+          <th class="three">İniş durağı</th>
+          <th class="one">Hat No</th>
+          <th class="five">Hat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="route in perfectRoute.routes">
+          <td>
+            <a ng-href="#/durak/{{route.from.id}}">{{route.from.name}}</a>
+          </td>
+          <td>
+            <a ng-href="#/durak/{{route.to.id}}">{{route.to.name}}</a>
+          </td>
+          <td>
+            <a ng-href="#/otobus/{{route.bus.id}}">{{route.bus.id}}</a>
+          </td>
+          <td>
+            <a ng-href="#/otobus/{{route.bus.id}}">{{route.bus.name}}</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
