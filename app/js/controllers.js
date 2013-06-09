@@ -53,13 +53,15 @@ app.controller("BusController", function ($scope, $routeParams, BusService) {
   }
 });
 
-app.controller("StopController", function ($scope, $routeParams, StopService, MapService) {
+app.controller("StopController", function ($scope, $routeParams, StopService, ClosestStopSearchService, MapService) {
   $scope.stop = StopService.get({id: $routeParams.id});
+  $scope.closestStops = [];
 
   $scope.$watch('stop', function (newValue, oldValue) {
     $scope.initMap(newValue);
   }, true);
 
+  var redIcon = new L.Icon.Default({iconUrl: "app/images/marker-icon-red.png"});
   $scope.initMap = function (stop) {
     if (!stop.location) {
       return;
@@ -68,12 +70,20 @@ app.controller("StopController", function ($scope, $routeParams, StopService, Ma
       lat: stop.location[0],
       lng: stop.location[1]
     };
+    $scope.closestStops = ClosestStopSearchService.search(location);
+
     var map = $scope.map = MapService.createMap();
     map.setView(location, 15);
 
     L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
-    L.marker(location).addTo(map).bindPopup(stop.name);
+    L.marker(location, {icon: redIcon}).addTo(map).bindPopup(stop.name);
   }
+
+  $scope.$watch('closestStops', function (searchResults, oldValue) {
+    if (searchResults && searchResults.length > 0) {
+      MapService.addStopMarkersToMap(searchResults, $scope.map, $scope.stop.location);
+    }
+  }, true)
 
 });
 
@@ -114,26 +124,9 @@ app.controller("ClosestStopSearchController", function ($scope, ClosestStopSearc
 
   $scope.$watch('searchResults', function (searchResults, oldValue) {
     if (searchResults && searchResults.length > 0) {
-      var myLocation = $scope.myLocation;
-      myLocation = new L.LatLng(myLocation[0], myLocation[1]);
-
       var map = $scope.map;
 
-      var locations = [];
-      for (var i in searchResults) {
-      	var result = searchResults[i];
-        var locationResult = result.location;
-
-        var location = new L.LatLng(locationResult[0], locationResult[1]);
-        locations.push(location);
-
-        var distance = Math.round(myLocation.distanceTo(location));
-        L.marker(locationResult).addTo(map).bindPopup(result.name + '</br>(Yaklaşık ' + distance + ' m)');
-      }
-
-      var bounds = new L.LatLngBounds(locations);
-      map.fitBounds(bounds);
-
+      MapService.addStopMarkersToMap(searchResults, map, $scope.myLocation);
       MapService.routing($scope.myLocation, searchResults[0].location)
           .success(function(routing_payload){
             L.polyline(routing_payload.route_geometry, {color: 'red'})

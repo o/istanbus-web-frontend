@@ -85,6 +85,28 @@ var MapService = function ($http) {
     var cloudMadeRouteUrl = 'http://routes.cloudmade.com/' + config.cloudMadeApiKey + '/api/0.3/' + from + ',' + to + '/foot.js?callback=JSON_CALLBACK';
     return $http.jsonp(cloudMadeRouteUrl);
   };
+
+  this.addStopMarkersToMap = function(stops, map, releventLocation) {
+    releventLocation = new L.LatLng(releventLocation[0], releventLocation[1]);
+
+    var locations = [];
+    for (var i in stops) {
+      var stop = stops[i];
+      var locationResult = stop.location;
+
+      var location = new L.LatLng(locationResult[0], locationResult[1]);
+      var distance = Math.round(releventLocation.distanceTo(location));
+      if (distance > 0)
+      {
+        var label = stop.name + '</br>(Yaklaşık ' + distance + ' m)'
+        L.marker(locationResult).addTo(map).bindPopup(label);
+
+        locations.push(location);
+      }
+    }
+    var bounds = new L.LatLngBounds(locations);
+    map.fitBounds(bounds);
+  };
 }
 
 angular.module('mapService', []).factory('MapService', function ($http) {
