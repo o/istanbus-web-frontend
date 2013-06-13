@@ -112,3 +112,58 @@ var MapService = function ($http) {
 angular.module('mapService', []).factory('MapService', function ($http) {
   return new MapService($http);
 })
+
+var Route = function(url, template, controller, labels) {
+  this.url = url;
+  this.template = template;
+  this.controller = controller;
+
+  for (var key in labels) {
+    var label = labels[key];
+    this[key] = label;
+  }
+}
+
+var RouteService = function() {
+  var routes = {
+    "busSearch" : new Route("/otobus-arama", "otobus-arama.html", "SearchController", {
+      "title" : "iett otobüs arama - istanbus"
+    }),
+    "busDetail" : new Route("/otobus/:id", "otobus.html", "BusController", {
+      "title" : "iett otobüs detay - istanbus"
+    }),
+    "stopSearch" : new Route("/durak-arama", "durak-arama.html", "SearchController", {
+      "title" : "iett, ido durak arama - istanbus"
+    }),
+    "stopDetail" : new Route("/durak/:id", "durak.html", "StopController", {
+      "title" : "iett, ido durak detay - istanbus"
+    }),
+    "closestStop" : new Route("/en-yakin-durak", "en-yakin-durak.html", "ClosestStopSearchController", {
+      "title" : "iett en yakın durak - istanbus"
+    }),
+    "pathSearch" : new Route("/nasil-giderim", "nasil-giderim.html", "PathSearchController", {
+      "title" : "iett nasıl giderim ? - istanbus"
+    }),
+    "pathSearchResult" : new Route("/nasil-giderim/nerden/:fromStopId/nereye/:toStopId",
+        "nasil-giderim-sonuc.html", "PathSearchResultController", {
+          "title" : "iett nasıl giderim ? sonuclar - istanbus"
+        })
+  };
+
+  this.getRoutes = function() {
+    return routes;
+  };
+}
+
+var routeService = new RouteService();
+angular.module('app.providers', []).provider('routeService', function() {
+  this.$get = function() {
+    return routeService;
+  }
+});
+
+app.run(function($rootScope) {
+  $rootScope.$on('$routeChangeSuccess', function(scope, current, pre) {
+    $rootScope._currentRoute = current._config;
+  });
+});

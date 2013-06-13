@@ -1,41 +1,16 @@
-var app = angular.module("app", ['istanbusServices', 'mapService']);
+var app = angular.module("app", ['istanbusServices', 'mapService', 'app.providers']);
 
-app.config(function($routeProvider) {
+app.config(function($routeProvider, routeServiceProvider) {
 
-  $routeProvider.when('/otobus-arama', {
-    templateUrl: "otobus-arama.html",
-    controller: "SearchController"
-  });
-
-  $routeProvider.when('/otobus/:id', {
-    templateUrl: "otobus.html",
-    controller: "BusController"
-  });
-
-  $routeProvider.when('/durak-arama', {
-    templateUrl: "durak-arama.html",
-    controller: "SearchController"
-  });
-
-  $routeProvider.when('/durak/:id', {
-    templateUrl: "durak.html",
-    controller: "StopController"
-  });
-
-  $routeProvider.when('/en-yakin-durak', {
-    templateUrl: "en-yakin-durak.html",
-    controller: "ClosestStopSearchController"
-  });
-
-  $routeProvider.when('/nasil-giderim', {
-    templateUrl: "nasil-giderim.html",
-    controller: "PathSearchController"
-  });
-
-  $routeProvider.when('/nasil-giderim/nerden/:fromStopId/nereye/:toStopId', {
-    templateUrl: "nasil-giderim-sonuc.html",
-    controller: "PathSearchResultController"
-  });
-
+  var RouteService = routeServiceProvider.$get();
+  var routes = RouteService.getRoutes();
+  for(var routeId in  routes) {
+    var route = routes[routeId];
+    $routeProvider.when(route.url, {
+      templateUrl: route.template,
+      controller: route.controller,
+      _config: route
+    });
+  }
   $routeProvider.otherwise({ redirectTo : '/otobus-arama' });
 });
