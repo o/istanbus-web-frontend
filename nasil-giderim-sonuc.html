@@ -1,6 +1,6 @@
 <section class="row">
   <div ng-show="fromStop.name && toStop.name" class="twelve columns panel honeydew">
-    <p><a ng-href="#/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#/durak/{{toStop.id}}">{{toStop.name}}</a>
+    <p><a ng-href="#!/durak/{{fromStop.id}}">{{fromStop.name}}</a> - <a ng-href="#!/durak/{{toStop.id}}">{{toStop.name}}</a>
       için ulaşım çözümleri</p>
   </div>
 </section>
@@ -27,16 +27,16 @@
         <tbody>
         <tr ng-repeat="route in perfectRoute.routes">
           <td>
-            <a ng-href="#/durak/{{route.from.id}}">{{route.from.name}}</a>
+            <a ng-href="#!/durak/{{route.from.id}}">{{route.from.name}}</a>
           </td>
           <td>
-            <a ng-href="#/durak/{{route.to.id}}">{{route.to.name}}</a>
+            <a ng-href="#!/durak/{{route.to.id}}">{{route.to.name}}</a>
           </td>
           <td>
-            <a ng-href="#/otobus/{{route.bus.id}}">{{route.bus.id}}</a>
+            <a ng-href="#!/otobus/{{route.bus.id}}">{{route.bus.id}}</a>
           </td>
           <td>
-            <a ng-href="#/otobus/{{route.bus.id}}">{{route.bus.name}}</a>
+            <a ng-href="#!/otobus/{{route.bus.id}}">{{route.bus.name}}</a>
           </td>
         </tr>
         </tbody>

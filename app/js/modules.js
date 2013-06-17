@@ -1,5 +1,3 @@
-var app = angular.module("app");
-
 var istanbusServices = angular.module('istanbusServices', ['ngResource']);
 istanbusServices.factory('SearchService', function ($resource) {
       return $resource('/api/search/:index/:keyword', {}, {
@@ -160,10 +158,4 @@ angular.module('app.providers', []).provider('routeService', function() {
   this.$get = function() {
     return routeService;
   }
-});
-
-app.run(function($rootScope) {
-  $rootScope.$on('$routeChangeSuccess', function(scope, current, pre) {
-    $rootScope._currentRoute = current._config;
-  });
 });

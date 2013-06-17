@@ -29,11 +29,11 @@
       <tbody>
       <tr ng-repeat="(key, value) in currentData.max">
         <td ng-show="currentData.go[key].name">
-          <a ng-href="#/durak/{{currentData.go[key].id}}">{{currentData.go[key].name}}</a>
+          <a ng-href="#!/durak/{{currentData.go[key].id}}">{{currentData.go[key].name}}</a>
           <span class="district">{{currentData.go[key].district}}</span>
         </td>
         <td ng-show="currentData.turn[key].name">
-          <a ng-href="#/durak/{{currentData.turn[key].id}}">{{currentData.turn[key].name}}</a>
+          <a ng-href="#!/durak/{{currentData.turn[key].id}}">{{currentData.turn[key].name}}</a>
           <span class="district">{{currentData.turn[key].district}}</span>
         </td>
         <td ng-hide="currentData.go[key].name">{{currentData.go[key]}}</td>
