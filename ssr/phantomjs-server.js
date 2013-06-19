@@ -3,7 +3,8 @@ var server = require('webserver').create();
 
 var URL_PREFIX = "http://istanbus.org/#!";
 
-var not_found = function(response) {
+var not_found = function(request, response) {
+  console.log(request.url + " not found");
   response.statusCode = 404;
   response.write('<html><body>Not Found!</body></html>');
   response.close();
@@ -25,13 +26,15 @@ var service = server.listen(7070, function(request, response) {
         response.statusCode = 200;
         response.write(html);
         response.close();
+
+	page.close();
       }
       else {
-        not_found(response);
+        not_found(request, response);
       }
     });
   }
   else {
-    not_found(response);
+    not_found(request, response);
   }
 });
