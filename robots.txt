@@ -8,5 +8,5 @@
 User-agent: *
 Disallow:
 
-
+Sitemap: http://istanbus.org/sitemap.xml
 ###   END  ###
