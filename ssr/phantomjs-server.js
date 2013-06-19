@@ -29,6 +29,7 @@ var service = server.listen(7070, function(request, response) {
       else {
         not_found(response);
       }
+      page.release();
     });
   }
   else {
