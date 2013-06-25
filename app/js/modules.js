@@ -56,6 +56,7 @@ istanbusServices.factory('ClosestStopSearchService', function ($resource) {
 );
 
 var MapService = function ($http) {
+  L.Icon.Default.imagePath = "/app/images"
   var $http = $http;
   var config = {
     defaultZoom: 8,
@@ -115,11 +116,25 @@ var Route = function(url, template, controller, labels) {
   this.url = url;
   this.template = template;
   this.controller = controller;
+  this.item = null;
 
   for (var key in labels) {
     var label = labels[key];
     this[key] = label;
   }
+
+  this.setItem = function(item) {
+    this.item = item;
+  }
+
+  this.getTitle = function() {
+    var title = this["title"];
+    var item = this.item;
+    if (item) {
+      title = sprintf(title, item);
+    }
+    return title;
+  };
 }
 
 var RouteService = function() {
@@ -128,13 +143,13 @@ var RouteService = function() {
       "title" : "iett otobüs arama - istanbus"
     }),
     "busDetail" : new Route("/otobus/:id", "otobus.html", "BusController", {
-      "title" : "iett otobüs detay - istanbus"
+      "title" : "%(id)s %(name)s hattı"
     }),
     "stopSearch" : new Route("/durak-arama", "durak-arama.html", "SearchController", {
       "title" : "iett, ido durak arama - istanbus"
     }),
     "stopDetail" : new Route("/durak/:id", "durak.html", "StopController", {
-      "title" : "iett, ido durak detay - istanbus"
+      "title" : "iett %(name)s durağından geçen otobüsler"
     }),
     "closestStop" : new Route("/en-yakin-durak", "en-yakin-durak.html", "ClosestStopSearchController", {
       "title" : "iett en yakın durak - istanbus"

@@ -2,15 +2,16 @@
 <html lang="en" ng-app="app">
 <head>
   <meta charset="utf-8">
-  <title>{{_currentRoute.title}}</title>
-  <meta content="tr" http-equiv="Content-Language"></meta>
-  <meta name="description" content="iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri. "></meta>
-  <meta name="keywords" content="iett, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"></meta>
+  <title ng-bind="_currentRoute.getTitle()">istanbus</title>
+  <meta content="tr" http-equiv="Content-Language">
+  <meta name="description" content="iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri. ">
+  <meta name="keywords" content="iett, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+  <script src="lib/js/leaflet.js"></script>
   <script src="lib/js/angular.min.js"></script>
   <script src="lib/js/angular-resource.min.js"></script>
+  <script src="lib/js/sprintf.min.js"></script>
 
   <script src="app/js/app.js"></script>
   <script src="app/js/controllers.js"></script>
@@ -30,7 +31,7 @@
   </script>
 
   <link rel="stylesheet" href="lib/css/foundation.css"/>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css"/>
+  <link rel="stylesheet" href="lib/css/leaflet.css"/>
   <link rel="stylesheet" href="app/css/app.css"/>
 
 </head>

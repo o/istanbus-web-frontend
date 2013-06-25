@@ -14,6 +14,7 @@ app.controller("BusController", function ($scope, $routeParams, BusService) {
   $scope.currentData = null;
 
   $scope.$watch('bus', function (bus, oldValue) {
+    $scope._currentRoute.setItem(bus);
     $scope.refreshTable();
   }, true);
 
@@ -57,8 +58,9 @@ app.controller("StopController", function ($scope, $routeParams, StopService, Cl
   $scope.stop = StopService.get({id: $routeParams.id});
   $scope.closestStops = [];
 
-  $scope.$watch('stop', function (newValue, oldValue) {
-    $scope.initMap(newValue);
+  $scope.$watch('stop', function (stop, oldValue) {
+    $scope._currentRoute.setItem(stop);
+    $scope.initMap(stop);
   }, true);
 
   var redIcon = new L.Icon.Default({iconUrl: "app/images/marker-icon-red.png"});
