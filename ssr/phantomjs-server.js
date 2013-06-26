@@ -18,6 +18,11 @@ var service = server.listen(7070, function(request, response) {
     console.log("working for url: " + dest);
 
     var page = webpage.create();
+    page.addCookie({
+      'name':     'istanbusBot',
+      'value':    'true',
+      'domain':   'istanbus.org'
+    });
     page.open(dest, function (status) {
       if (status == 'success') {
         var html = page.evaluate(function () {
