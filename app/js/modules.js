@@ -110,7 +110,7 @@ var MapService = function ($http) {
 
 angular.module('mapService', []).factory('MapService', function ($http) {
   return new MapService($http);
-})
+});
 
 var Route = function(url, template, controller, labels) {
   this.url = url;
@@ -167,10 +167,30 @@ var RouteService = function() {
     return routes;
   };
 }
+// providers
+var providers = angular.module('app.providers', []);
 
 var routeService = new RouteService();
-angular.module('app.providers', []).provider('routeService', function() {
+providers.provider('routeService', function() {
   this.$get = function() {
     return routeService;
+  }
+});
+
+providers.provider('GA', function () {
+  this.$get = function() {
+    return {
+      init: function() {
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38712116-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      }
+    }
   }
 });

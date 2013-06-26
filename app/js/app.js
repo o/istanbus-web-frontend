@@ -1,4 +1,4 @@
-var app = angular.module("app", ['istanbusServices', 'mapService', 'app.providers']);
+var app = angular.module("app", ['istanbusServices', 'mapService', 'app.providers', 'ngCookies']);
 
 app.config(function($routeProvider, routeServiceProvider, $locationProvider) {
 
@@ -17,7 +17,12 @@ app.config(function($routeProvider, routeServiceProvider, $locationProvider) {
   $routeProvider.otherwise({ redirectTo : '/otobus-arama' });
 });
 
-app.run(function($rootScope) {
+app.run(function($rootScope, GA, $cookies) {
+  if (!$cookies.istanbusBot)
+  {
+    // init google analytics
+    GA.init($cookies);
+  }
   $rootScope.$on('$routeChangeSuccess', function(scope, current, pre) {
     $rootScope._currentRoute = current._config;
   });
