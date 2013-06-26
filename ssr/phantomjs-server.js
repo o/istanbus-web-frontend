@@ -18,6 +18,7 @@ var service = server.listen(7070, function(request, response) {
     console.log("working for url: " + dest);
 
     var page = webpage.create();
+    page.settings.userAgent = 'istanbusSSR';
     page.open(dest, function (status) {
       if (status == 'success') {
         var html = page.evaluate(function () {

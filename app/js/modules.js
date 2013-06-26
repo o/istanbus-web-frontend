@@ -181,6 +181,10 @@ providers.provider('GA', function () {
   this.$get = function() {
     return {
       init: function() {
+        if (navigator.userAgent == "istanbusSSR") {
+          // ignore istanbus server side renderer
+          return;
+        }
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-38712116-1']);
         _gaq.push(['_trackPageview']);
