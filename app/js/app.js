@@ -14,7 +14,9 @@ app.config(function($routeProvider, routeServiceProvider, $locationProvider) {
       _config: route
     });
   }
-  $routeProvider.otherwise({ redirectTo : '/otobus-arama' });
+
+  var defaultRoute = RouteService.getDefaultRoute();
+  $routeProvider.otherwise({ redirectTo : defaultRoute.url });
 });
 
 app.run(function($rootScope, GA) {

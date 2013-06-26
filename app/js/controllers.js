@@ -8,14 +8,17 @@ app.controller("SearchController", function ($scope) {
 
 });
 
-app.controller("BusController", function ($scope, $routeParams, BusService) {
+app.controller("BusController", function ($scope, $routeParams, $rootScope, BusService) {
   $scope.bus = BusService.get({id: $routeParams.id});
   $scope.key = "stops";
   $scope.currentData = null;
 
-  $scope.$watch('bus', function (bus, oldValue) {
-    $scope._currentRoute.setItem(bus);
-    $scope.refreshTable();
+  $scope.$watch('bus.id', function (busId, oldValue) {
+    if (busId) {
+      var bus = $rootScope.item = $scope.bus;
+      $scope._currentRoute.setItem(bus);
+      $scope.refreshTable();
+    }
   }, true);
 
   var _getNested = function(key, object) {
@@ -54,13 +57,29 @@ app.controller("BusController", function ($scope, $routeParams, BusService) {
   }
 });
 
-app.controller("StopController", function ($scope, $routeParams, StopService, ClosestStopSearchService, MapService) {
-  $scope.stop = StopService.get({id: $routeParams.id});
+app.controller("StopController", function ($scope, $routeParams, $rootScope,
+                                           StopService, ClosestStopSearchService, MapService) {
+  var setBusString = function(stop) {
+    var busList = stop.bus;
+    var busNames = [];
+    for (var i = 0; i < busList.length; i++) {
+      var bus = busList[i];
+      busNames.push(bus.id + " " + bus.name);
+    }
+
+    stop.busString = busNames.join(", ");
+  }
+
+  $scope.item = $scope.stop = StopService.get({id: $routeParams.id});
   $scope.closestStops = [];
 
-  $scope.$watch('stop', function (stop, oldValue) {
-    $scope._currentRoute.setItem(stop);
-    $scope.initMap(stop);
+  $scope.$watch('stop.id', function (stopId, oldValue) {
+    if (stopId) {
+      var stop = $rootScope.item = $scope.stop;
+      $scope._currentRoute.setItem(stop);
+      setBusString(stop);
+      $scope.initMap(stop);
+    }
   }, true);
 
   var redIcon = new L.Icon.Default({iconUrl: "app/images/marker-icon-red.png"});

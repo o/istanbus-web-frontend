@@ -143,13 +143,17 @@ var RouteService = function() {
       "title" : "iett otobüs arama - istanbus"
     }),
     "busDetail" : new Route("/otobus/:id", "otobus.html", "BusController", {
-      "title" : "%(id)s %(name)s hattı"
+      "title" : "%(id)s %(name)s hattı",
+      "description" : "iett %(id)s %(name)s sefer saatleri, geçtiği duraklar, iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri.",
+      "keywords" : "iett, %(id)s, %(name)s sefer saatleri, geçtiği duraklar, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"
     }),
     "stopSearch" : new Route("/durak-arama", "durak-arama.html", "SearchController", {
       "title" : "iett, ido durak arama - istanbus"
     }),
     "stopDetail" : new Route("/durak/:id", "durak.html", "StopController", {
-      "title" : "iett %(name)s durağından geçen otobüsler"
+      "title" : "iett %(name)s durağından geçen otobüsler",
+      "description" : "iett %(name)s durağından geçen otobüsler(hatlar), iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri.",
+      "keywords" : "iett, %(name)s, %(name)s durağı, %(busString)s sefer saatleri, geçtiği duraklar, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"
     }),
     "closestStop" : new Route("/en-yakin-durak", "en-yakin-durak.html", "ClosestStopSearchController", {
       "title" : "iett en yakın durak - istanbus"
@@ -166,6 +170,10 @@ var RouteService = function() {
   this.getRoutes = function() {
     return routes;
   };
+
+  this.getDefaultRoute = function() {
+    return routes["busSearch"];
+  }
 }
 // providers
 var providers = angular.module('app.providers', []);

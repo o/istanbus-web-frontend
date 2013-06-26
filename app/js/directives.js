@@ -49,3 +49,38 @@ app.directive('navigationUrl', function($location) {
     }
   };
 });
+
+app.directive('stringTemplate', function() {
+  return {
+    restrict: "A",
+    link: function(scope, element, attributes) {
+      scope.$watch("item", function(item, oldValue) {
+        if (item) {
+          var templateKey = attributes.stringTemplate;
+          var tagMode = false;
+          if (templateKey == "TAG") {
+            tagMode = true;
+            templateKey = element.prop('localName');
+          }
+          var template = scope._currentRoute[templateKey];
+          if (template) {
+            try {
+              var rendered = sprintf(template, item);
+            }
+            catch(e) {
+              console.log(e);
+            }
+            if (rendered) {
+              if (tagMode) {
+                element.text(rendered);
+              }
+              else {
+                element.attr('content', rendered);
+              }
+            }
+          }
+        }
+      }, true);
+    }
+  };
+});
