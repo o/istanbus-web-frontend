@@ -31,8 +31,6 @@ var service = server.listen(7070, function(request, response) {
         response.statusCode = 200;
         response.write(html);
         response.close();
-
-	page.close();
       }
       else {
         not_found(request, response);
