@@ -153,7 +153,7 @@ var RouteService = function() {
     "stopDetail" : new Route("/durak/:id", "durak.html", "StopController", {
       "title" : "iett %(name)s durağından geçen otobüsler",
       "description" : "iett %(name)s durağından geçen otobüsler(hatlar), iett otobüs saatleri, ido seferleri, iett otobüs durakları, otobüs saatleri, oraya nasıl giderim ve istanbul ulaşım çözümleri.",
-      "keywords" : "iett, %(name)s, %(name)s durağı, %(busString)s sefer saatleri, geçtiği duraklar, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"
+      "keywords" : "iett, %(name)s, %(name)s durağı, sefer saatleri, geçtiği duraklar, ido, iett otobüs arama, otobüs saatleri, otobüs durakları, istanbul otobüs, istanbul ulaşım, oraya nasıl giderim, durak arama, en yakın durak"
     }),
     "closestStop" : new Route("/en-yakin-durak", "en-yakin-durak.html", "ClosestStopSearchController", {
       "title" : "iett en yakın durak - istanbus"

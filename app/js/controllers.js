@@ -59,17 +59,6 @@ app.controller("BusController", function ($scope, $routeParams, $rootScope, BusS
 
 app.controller("StopController", function ($scope, $routeParams, $rootScope,
                                            StopService, ClosestStopSearchService, MapService) {
-  var setBusString = function(stop) {
-    var busList = stop.bus;
-    var busNames = [];
-    for (var i = 0; i < busList.length; i++) {
-      var bus = busList[i];
-      busNames.push(bus.id + " " + bus.name);
-    }
-
-    stop.busString = busNames.join(", ");
-  }
-
   $scope.item = $scope.stop = StopService.get({id: $routeParams.id});
   $scope.closestStops = [];
 
@@ -77,7 +66,6 @@ app.controller("StopController", function ($scope, $routeParams, $rootScope,
     if (stopId) {
       var stop = $rootScope.item = $scope.stop;
       $scope._currentRoute.setItem(stop);
-      setBusString(stop);
       $scope.initMap(stop);
     }
   }, true);
