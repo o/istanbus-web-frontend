@@ -25,5 +25,6 @@ app.run(function($rootScope, GA) {
 
   $rootScope.$on('$routeChangeSuccess', function(scope, current, pre) {
     $rootScope._currentRoute = current._config;
+    GA.trackPage();
   });
 });
