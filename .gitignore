@@ -3,3 +3,5 @@
 istanbus-web-frontend.iml
 sitemap.xml
 *.log
+dist/
+node_modules/
