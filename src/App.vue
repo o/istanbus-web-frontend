@@ -1,10 +1,20 @@
 <template>
   <div id="app">
+    <b-container>
+
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+
+    <div>
+      <b-nav tabs fill>
+        <b-nav-item active> <router-link to="/">Bus Search</router-link></b-nav-item>
+        <b-nav-item><router-link to="/about">About</router-link></b-nav-item>
+      </b-nav>
     </div>
+      
+    </div>
+
     <router-view/>
+    </b-container>
   </div>
 </template>
 
