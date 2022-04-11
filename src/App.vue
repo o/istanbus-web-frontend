@@ -6,8 +6,11 @@
 
     <div>
       <b-nav tabs fill>
-        <b-nav-item active> <router-link to="/">Bus Search</router-link></b-nav-item>
-        <b-nav-item><router-link to="/about">About</router-link></b-nav-item>
+        <b-nav-item active> <router-link :to="{ name: 'BusSearch'}">Bus Search</router-link></b-nav-item>
+        <b-nav-item active> <router-link :to="{ name: 'StopSearch'}">Stop Search</router-link></b-nav-item>
+        <b-nav-item active> <router-link :to="{ name: 'RoutePlanner'}">Route Planner</router-link></b-nav-item>
+        <b-nav-item active> <router-link :to="{ name: 'ClosestStop'}">Closest Stop</router-link></b-nav-item>
+
       </b-nav>
     </div>
       

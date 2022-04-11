@@ -3,7 +3,7 @@
     <h1>BUS SEARCH</h1>
     <b-form-input v-model="busSearchParam" @input="debounceSearchParam" placeholder="Enter bus id or route name"></b-form-input>
     <ul v-if="busSearchResults.length !== 0">
-      <li v-for="bus in busSearchResults" :key="bus.id">{{ bus.name }}</li>  
+      <li v-for="bus in busSearchResults" :key="bus.id"><router-link :to="{ name: 'BusDetails', params: {id: bus.id }}">{{bus.id}}</router-link> {{ bus.name }}</li>  
     </ul>
     <span v-else> no buses</span>
   </div>

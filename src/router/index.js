@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import BusSearch from '../views/BusSearch.vue'
+import BusDetails from '../views/BusDetails.vue'
+import StopSearch from '../views/StopSearch.vue'
+import StopDetails from '../views/StopDetails.vue'
+import RoutePlanner from '../views/RoutePlanner.vue'
+import ClosestStop from '../views/ClosestStop.vue'
 
 Vue.use(VueRouter)
 
@@ -11,12 +16,29 @@ const routes = [
     component: BusSearch
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/stop-search',
+    name: 'StopSearch',
+    component: StopSearch
+  },
+  {
+    path: '/bus/:id',
+    name: 'BusDetails',
+    component: BusDetails
+  },
+  {
+    path: '/stop/:id',
+    name: 'StopDetails',
+    component: StopDetails
+  },
+  {
+    path: '/route-planner',
+    name: 'RoutePlanner',
+    component: RoutePlanner
+  },
+  {
+    path: '/closest-stop',
+    name: 'ClosestStop',
+    component: ClosestStop
   }
 ]
 
